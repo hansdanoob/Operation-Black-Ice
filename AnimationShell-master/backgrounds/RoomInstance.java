@@ -20,7 +20,7 @@ public class RoomInstance {
         this.addToArray(xIndex, yIndex); 
 
         // Add necessary doors to match with neighbour's doors
-        RoomInstance[] neighbours = {this.getNorth(), this.getSouth(), this.getEast(), this.getWest()};
+        RoomInstance[] neighbours = this.getNeighbours(); // return formatted North, South, East, West
         for (int i = 0; i < 4; i++) {
             if (neighbours[i] != null) {
                 if (neighbours[i].getDoors().contains(DIRECTIONS[i].opposite())) {
@@ -43,28 +43,9 @@ public class RoomInstance {
 
 
 
-    public ArrayList<RoomInstance> getNeighbours() {
+    public RoomInstance[] getNeighbours() {
         
-        int yIndex = this.getY();
-        int xIndex = this.getX();
-        ArrayList<RoomInstance> neighbours = new ArrayList<>();
-
-        try {
-            neighbours.add(roomArray.get(xIndex).get(yIndex+1));
-        } catch(Exception e) {}
-
-        try {
-            neighbours.add(roomArray.get(xIndex).get(yIndex-1));
-        } catch(Exception e) {}
-
-        try {
-            neighbours.add(roomArray.get(xIndex+1).get(yIndex));
-        } catch(Exception e) {}
-
-        try {
-            neighbours.add(roomArray.get(xIndex-1).get(yIndex));
-        } catch(Exception e) {}
-        
+        RoomInstance[] neighbours = {this.getNorth(), this.getSouth(), this.getEast(), this.getWest()};
         return neighbours;
     }
 
