@@ -8,7 +8,7 @@ public class RoomInstance {
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     static final double DOOR_CHANCE = 0.8;
 
-    static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>();
+    public static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>();
 
     ArrayList<Direction> doors = new ArrayList<>();
     Random random = new Random();
@@ -134,16 +134,15 @@ public class RoomInstance {
 
 
     public void addToArray(int xIndex, int yIndex) {
-        int xSize = roomArray.size();
 
-        while (xSize-1 < xIndex) {
+        while (roomArray.size()-1 < xIndex) {
             roomArray.add(new ArrayList<RoomInstance>());
         }
 
-        int ySize = roomArray.get(xIndex).size();
-
-        while (ySize-1 < yIndex) {
-            roomArray.get(xIndex).add(this);
+        while (roomArray.get(xIndex).size() < yIndex) {
+            roomArray.get(xIndex).add(null);
         }
+
+        roomArray.get(xIndex).add(this);
     }
 }
