@@ -34,7 +34,7 @@ public class RoomInstance {
         for (int i = 0; i < 4; i++) {
             if (!doors.contains(DIRECTIONS[i])) {
                 double rand = random.nextDouble();
-                if (rand >= DOOR_CHANCE) {
+                if (rand <= DOOR_CHANCE) {
                     doors.add(DIRECTIONS[i]);
                 }
             }
