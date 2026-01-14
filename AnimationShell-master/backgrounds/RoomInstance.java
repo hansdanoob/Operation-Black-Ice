@@ -6,7 +6,7 @@ import java.util.List;
 public class RoomInstance {
 
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
-    static final double DOOR_CHANCE = 0.8;
+    static final double DOOR_CHANCE = 0.6;
 
     public static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>();
 
@@ -21,10 +21,13 @@ public class RoomInstance {
 
         // Add necessary doors to match with neighbour's doors
         RoomInstance[] neighbours = this.getNeighbours(); // return formatted North, South, East, West
+        ArrayList<Direction> neighbouringWalls = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             if (neighbours[i] != null) {
                 if (neighbours[i].getDoors().contains(DIRECTIONS[i].opposite())) {
                     this.doors.add(DIRECTIONS[i]);
+                } else {
+                    neighbouringWalls.add(DIRECTIONS[i]);
                 }
             }
         }
@@ -32,7 +35,7 @@ public class RoomInstance {
 
         // add random new doors
         for (int i = 0; i < 4; i++) {
-            if (!doors.contains(DIRECTIONS[i])) {
+            if ((!doors.contains(DIRECTIONS[i])) && (!neighbouringWalls.contains(DIRECTIONS[i]))) { // if not already added and not into a neighbouring wall
                 double rand = random.nextDouble();
                 if (rand <= DOOR_CHANCE) {
                     doors.add(DIRECTIONS[i]);
