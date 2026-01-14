@@ -8,8 +8,7 @@ public class RoomInstance {
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     static final double DOOR_CHANCE = 0.6;
 
-    public static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>(); /* Make into doubly linked array
-                                                                                                              Would need a 4-way iterator */
+    public static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>(); // Make into doubly linked array. Would need a 4-way iterator
 
     private ArrayList<Direction> doors = new ArrayList<>();
     private Random random = new Random();
