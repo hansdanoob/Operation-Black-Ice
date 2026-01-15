@@ -1,17 +1,10 @@
-import java.util.ListIterator;
+// import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class LinkedArray {
     
-    Node southEastCorner = null;
-    Node southWestCorner = null;
-    Node northEastCorner = null;
-    Node northWestCorner = null;
+    Node startingNode;
 
-    int xSize = 0;
-    int ySize = 0;
-
-    // iterator --------------------------------------------------------------------- change so is stored AT a room, NOT between rooms
     Node northNode;
     Node southNode;
     Node eastNode;
@@ -20,92 +13,18 @@ public class LinkedArray {
 
     int xIndex;
     int yIndex;
-    Node lastCall;
 
 
-    public void add(int xIndex, int yIndex, RoomInstance room) { //Inserts the specified element at the specified position in the list
-
-            Node current = southWestCorner; // bottom-left
-
+    public String toString() {
+        return "";
     }
 
-
-    public String toString() { //Return a text representation of the linked list in the form [element1, element2, element2]
-        if (xSize <= 0 || ySize <= 0) {
-            return "[]";
-        } else {
-            String string = "[";
-            Node current = northWestCorner;
-
-            for (int j = 0; j < ySize; j++) {
-                for (int i = 0; i < xSize; i++) {
-                    string += current.getRoom();
-                    current = current.getEast();
-                    if (i+1 < xSize) { // if not last element in row
-                        string += ", ";
-                    }
-                }
-                string += "]";
-                if (j+1 < ySize) { // if not last row
-                    string += "\n";
-                }
-            }
-
-            string += "]";
-            return string;
-        }
-    }
-
-
-    public long size() { //Returns the number of elements in this list
+    public long size() {
         return Node.getRoomCount();
     }
 
-
-    public void clear() { //Removes all of the elements from the list
-        int originalxSize = xSize;
-        int originalySize = ySize;
-        for (int i = 0; i < originalySize; i++) {
-            for (int j = 0; j < originalxSize; j++) {
-                this.set(i, j, null);
-            }
-        }
-    }
-
-
-    public RoomInstance get(int xIndex, int yIndex) { //Returns the element at the specified position in the list. Return empty string if the index is "out of bounds".
-        if (xIndex < 0 || yIndex < 0) {
-            return null;
-        } else {
-            Node current = southWestCorner;
-            for (int i = 0; i < xIndex; i++) {
-                current = current.getEast();
-            }
-            for (int i = 0; i < yIndex; i++) {
-                current = current.getNorth();
-            }
-            return current.getRoom();
-        }
-    }
-
-
-    public void set(int xIndex, int yIndex, RoomInstance room) { //Sets the element at the specified position in the list to the given value. If the index is "out of bounds", no action is required.
-        if (xIndex >= 0) {
-            Node current = southWestCorner;
-            for (int i = 0; i < xIndex; i++) {
-                current = current.getEast();
-            }
-            for (int i = 0; i < yIndex; i++) {
-                current = current.getNorth();
-            }
-            current.setRoom(room);
-        }
-    }
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     public LinkedArray listIterator() {
-        currentNode = southWestCorner;
+        currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
@@ -135,17 +54,13 @@ public class LinkedArray {
         if (westNode != null) {return true;} else {return false;}
     }
 
-    public Object north() {
+    public void moveNorth() {
 
         if (northNode == null) {
             throw new NoSuchElementException();
         }
 
-        lastCall = northNode;
-
         Node nextNode = northNode;
-
-        RoomInstance returnValue = nextNode.getRoom();
 
         // new references
         currentNode = nextNode;
@@ -154,22 +69,16 @@ public class LinkedArray {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        xIndex++;
-
-        return returnValue;
+        yIndex++;
     }
 
-    public Object south() {
+    public void moveSouth() {
 
         if (southNode == null) {
             throw new NoSuchElementException();
         }
 
-        lastCall = southNode;
-
         Node nextNode = southNode;
-
-        RoomInstance returnValue = nextNode.getRoom();
 
         // new references
         currentNode = nextNode;
@@ -178,22 +87,16 @@ public class LinkedArray {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        xIndex++;
-
-        return returnValue;
+        yIndex--;
     }
 
-    public Object east() {
+    public void moveEast() {
 
         if (eastNode == null) {
             throw new NoSuchElementException();
         }
 
-        lastCall = eastNode;
-
         Node nextNode = eastNode;
-
-        RoomInstance returnValue = nextNode.getRoom();
 
         // new references
         currentNode = nextNode;
@@ -203,21 +106,15 @@ public class LinkedArray {
         westNode = nextNode.getWest();
 
         xIndex++;
-
-        return returnValue;
     }
 
-    public Object west() {
+    public void moveWest() {
 
         if (westNode == null) {
             throw new NoSuchElementException();
         }
 
-        lastCall = westNode;
-
         Node nextNode = westNode;
-
-        RoomInstance returnValue = nextNode.getRoom();
 
         // new references
         currentNode = nextNode;
@@ -226,47 +123,34 @@ public class LinkedArray {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        xIndex++;
-
-        return returnValue;
+        xIndex--;
     }
-
    
-    public int nextXIndex() {
+    public int xIndex() {
         return xIndex;
     }
 
-    public int nextYIndex() {
+    public int yIndex() {
         return yIndex;
     }
 
-    public int previousXIndex() {
-        return xIndex-1;
-    }
-
-    public int previousYIndex() {
-        return yIndex-1;
-    }
-
-
     public void set(RoomInstance room) {
-        if (lastCall == null) {
+        if (currentNode == null) {
             throw new IllegalStateException();
         }
-        lastCall.setRoom(room);
+        currentNode.setRoom(room);
         
     }
 
     public void add(RoomInstance room) {
+        if (currentNode == null) {
+            Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
+            southNode.setNorth(newNode);
+            northNode.setSouth(newNode);
+            eastNode.setWest(newNode);
+            westNode.setEast(newNode);
 
-        Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
-        southNode.setNorth(newNode);
-        northNode.setSouth(newNode);
-        eastNode.setWest(newNode);
-        westNode.setEast(newNode);
-
-        currentNode = newNode;
-
-        lastCall = null;
+            currentNode = newNode;
+        }
     }
 }
