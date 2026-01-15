@@ -67,7 +67,7 @@ public class LinkedArray {
         int originalySize = ySize;
         for (int i = 0; i < originalySize; i++) {
             for (int j = 0; j < originalxSize; j++) {
-                remove(0);
+                this.set(i, j, null);
             }
         }
     }
@@ -183,58 +183,90 @@ public class LinkedArray {
         return returnValue;
     }
 
-    // east ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public Object east() {
 
-    // west ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (eastNode == null) {
+            throw new NoSuchElementException();
+        }
 
-    public int nextIndex() {
-        return index;
+        lastCall = eastNode;
+
+        Node nextNode = eastNode;
+
+        RoomInstance returnValue = nextNode.getRoom();
+
+        // new references
+        currentNode = nextNode;
+        northNode = nextNode.getNorth();
+        southNode = nextNode.getSouth();
+        eastNode = nextNode.getEast();
+        westNode = nextNode.getWest();
+
+        xIndex++;
+
+        return returnValue;
     }
 
-    public int previousIndex() {
-        return index-1;
+    public Object west() {
+
+        if (westNode == null) {
+            throw new NoSuchElementException();
+        }
+
+        lastCall = westNode;
+
+        Node nextNode = westNode;
+
+        RoomInstance returnValue = nextNode.getRoom();
+
+        // new references
+        currentNode = nextNode;
+        northNode = nextNode.getNorth();
+        southNode = nextNode.getSouth();
+        eastNode = nextNode.getEast();
+        westNode = nextNode.getWest();
+
+        xIndex++;
+
+        return returnValue;
     }
 
-    public void remove() {
+   
+    public int nextXIndex() {
+        return xIndex;
+    }
 
+    public int nextYIndex() {
+        return yIndex;
+    }
+
+    public int previousXIndex() {
+        return xIndex-1;
+    }
+
+    public int previousYIndex() {
+        return yIndex-1;
+    }
+
+
+    public void set(RoomInstance room) {
         if (lastCall == null) {
             throw new IllegalStateException();
         }
-
-        Node newPreviousNode = lastCall.getWest();
-        Node newNextNode = lastCall.getEast();
-
-        newPreviousNode.setEast(newNextNode);
-        newNextNode.setWest(newPreviousNode);
-
-        lastCall = null;
-        size--;
-        index--;
-    }
-
-    public void set(Object e) {
-        if (lastCall == null) {
-            throw new IllegalStateException();
-        }
-        lastCall.setValue((String) e);
+        lastCall.setRoom(room);
         
     }
 
-    public void add(Object e) {
+    public void add(RoomInstance room) {
 
-        if (lastCall == null) {
-            throw new IllegalStateException();
-        }
+        Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
+        southNode.setNorth(newNode);
+        northNode.setSouth(newNode);
+        eastNode.setWest(newNode);
+        westNode.setEast(newNode);
 
-        Node newNode = new Node((String) e, previousNode, nextNode);
-        previousNode.setEast(newNode);
-        nextNode.setWest(newNode);
-
-        previousNode = newNode;
+        currentNode = newNode;
 
         lastCall = null;
-
-        size++;
-        index++;
     }
 }

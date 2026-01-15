@@ -21,58 +21,47 @@ public class Node
 		this.west = west;
 	}
 	
-	public RoomInstance getRoom()
-	{
+	public RoomInstance getRoom() {
 		return this.room;
 	}
 
-	public Node getNorth()
-	{
+	public Node getNorth() {
 		return this.north;
 	}
 
-	public Node getSouth()
-	{
+	public Node getSouth() {
 		return this.south;
 	}
 	
-	public Node getEast()
-	{
+	public Node getEast() {
 		return this.east;
 	}
 
-	public Node getWest()
-	{
+	public Node getWest() {
 		return this.west;
 	}
 
-	public void setRoom(RoomInstance newRoom)
-	{
+	public void setRoom(RoomInstance newRoom) {
 		this.room = newRoom;
 	}
 	
-	public void setNorth(Node north)
-	{
+	public void setNorth(Node north) {
 		this.north = north;
 	}
 	
-	public void setSouth(Node south)
-	{
+	public void setSouth(Node south) {
 		this.south = south;
 	}
 
-	public void setEast(Node east)
-	{
+	public void setEast(Node east) {
 		this.east = east;
 	}
 	
-	public void setWest(Node west)
-	{
+	public void setWest(Node west) {
 		this.west = west;
 	}
 	
-	public Node copyNode()
-	{
+	public Node copyNode() {
 		Node copyNode = new Node(this.room, this.north, this.south, this.east, this.west);
 		return copyNode;
 	}

@@ -1,0 +1,4 @@
+Needed functionality of linked array:
+-clear
+-(maybe) iterator to follow penguin position
+-add room, wherever needed (i.e. not box)
