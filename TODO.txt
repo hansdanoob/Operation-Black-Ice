@@ -1,4 +1,15 @@
 Needed functionality of linked array:
--clear
+-clear/reset
 -(maybe) iterator to follow penguin position
 -add room, wherever needed (i.e. not box)
+
+
+Current Arraylist problems:
+-cannot store dimensions
+-no concrete "start" of array
+
+
+
+NEXT:
+
+animate peng

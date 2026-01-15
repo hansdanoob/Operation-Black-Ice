@@ -30,7 +30,7 @@ public class SimpleSprite implements DisplayableSprite {
 		
 		if (image == null) {
 			try {
-				image = ImageIO.read(new File("AnimationShell-master/res/simple-sprite.png"));
+				image = ImageIO.read(new File("AnimationShell-master/res/penguin/frontIdle.png"));
 			}
 			catch (IOException e) {
 				System.out.println(e.toString());
