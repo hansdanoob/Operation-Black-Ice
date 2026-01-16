@@ -151,12 +151,15 @@ public class LinkedArrayIterator {
             throw new IllegalStateException();
         }
         currentNode.setRoom(room);
-        
     }
 
-    public void add(RoomInstance room) {
+    public void addRoom() {
         if (currentNode == null) {
+            RoomInstance room  = null;
+
             Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
+
+            newNode.setRoom(new RoomInstance(xIndex, yIndex, newNode));
             southNode.setNorth(newNode);
             northNode.setSouth(newNode);
             eastNode.setWest(newNode);

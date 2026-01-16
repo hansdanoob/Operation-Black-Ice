@@ -13,10 +13,12 @@ public class RoomInstance {
     private ArrayList<Direction> doors = new ArrayList<>();
     private Random random = new Random();
 
+    private Node parentNode;
 
-    public RoomInstance(int xIndex, int yIndex) {
 
-        this.addToArray(xIndex, yIndex); 
+    public RoomInstance(int xIndex, int yIndex, Node parentNode) {
+
+        this.parentNode = parentNode;
 
         // Add necessary doors to match with neighbour's doors
         RoomInstance[] neighbours = this.getNeighbours(); // return formatted North, South, East, West
@@ -54,58 +56,25 @@ public class RoomInstance {
 
     public RoomInstance getNorth() {
         
-        int yIndex = this.getY();
-        int xIndex = this.getX();
-
-        RoomInstance room = null;
-        try {
-            room = roomArray.get(xIndex).get(yIndex+1);
-        } catch(Exception e) {}
-        
-        return room;
+        return this.parentNode.getNorth().getRoom();
     }
 
 
     public RoomInstance getSouth() {
         
-        int yIndex = this.getY();
-        int xIndex = this.getX();
-
-        RoomInstance room = null;
-        try {
-            room = roomArray.get(xIndex).get(yIndex-1);
-        } catch(Exception e) {}
-        
-        return room;
+        return this.parentNode.getSouth().getRoom();
     }
 
 
     public RoomInstance getEast() {
         
-        int yIndex = this.getY();
-        int xIndex = this.getX();
-
-        RoomInstance room = null;
-        try {
-            room = roomArray.get(xIndex+1).get(yIndex);
-        } catch(Exception e) {}
-        
-        return room;
+        return this.parentNode.getEast().getRoom();
     }
 
 
     public RoomInstance getWest() {
         
-        int yIndex = this.getY();
-        int xIndex = this.getX();
-
-        RoomInstance room = null;
-        try {
-            LinkedArrayIterator pointer = new LinkedArrayIterator(this);
-            room = roomArray.get(xIndex-1).get(yIndex);
-        } catch(Exception e) {}
-        
-        return room;
+        return this.parentNode.getWest().getRoom();
     }
 
 
