@@ -9,8 +9,6 @@ public class SimpleSprite implements DisplayableSprite {
 	private static final int PERIOD_LENGTH = 200;
 	private static final int IMAGES_IN_CYCLE = 2;
 
-	private static Image[] images;
-
 	private static Image left0;
 	private static Image right0;
 	private static Image up0;
@@ -34,7 +32,7 @@ public class SimpleSprite implements DisplayableSprite {
 	private double height = 50;
 	private boolean dispose = false;	
 
-	private final double VELOCITY = 200;
+	private final double VELOCITY = 150;
 
 
 	private Direction direction = Direction.DOWN;
@@ -63,26 +61,24 @@ public class SimpleSprite implements DisplayableSprite {
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
-		if (images == null) {
-			try {
-				down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
-				down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
-				downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
-				left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
-				left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
-				leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
-				up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
-				up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
-				upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
-				right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
-				right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
-				rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
-				
-			}
-			catch (IOException e) {
-				System.err.println(e.toString());
-			}		
+		try {
+			down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
+			down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
+			downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
+			left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
+			left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
+			leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
+			up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
+			up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
+			upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
+			right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
+			right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
+			rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
+			
 		}
+		catch (IOException e) {
+			System.err.println(e.toString());
+		}		
 	}
 
 	public Image getImage() {
