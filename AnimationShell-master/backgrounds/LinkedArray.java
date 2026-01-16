@@ -15,15 +15,8 @@ public class LinkedArray {
     int yIndex;
 
 
-    public String toString() {
-        return "";
-    }
 
-    public long size() {
-        return Node.getRoomCount();
-    }
-
-    public LinkedArray listIterator() {
+    public LinkedArray() {
         currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
@@ -31,7 +24,14 @@ public class LinkedArray {
         westNode = currentNode.getWest();
         xIndex = 0;
         yIndex = 0;
-        return this;
+    }
+
+    public String toString() {
+        return "";
+    }
+
+    public long size() {
+        return Node.getRoomCount();
     }
 
     public boolean hasCurrent() {
