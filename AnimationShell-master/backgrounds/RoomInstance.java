@@ -1,14 +1,11 @@
 
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomInstance {
 
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     static final double DOOR_CHANCE = 0.6;
-
-    public static LinkedArrayIterator roomArray = new LinkedArrayIterator();
 
     private ArrayList<Direction> doors = new ArrayList<>();
     private Random random = new Random();
@@ -16,7 +13,7 @@ public class RoomInstance {
     private Node parentNode;
 
 
-    public RoomInstance(int xIndex, int yIndex, Node parentNode) {
+    public RoomInstance(Node parentNode) {
 
         this.parentNode = parentNode;
 
@@ -81,27 +78,4 @@ public class RoomInstance {
     public ArrayList<Direction> getDoors() {
         return this.doors;
     }
-
-    /*
-    public int getX() {
-        for (int i = 0; i < roomArray.size(); i++) {
-            if (roomArray.get(i).indexOf(this) != -1) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    public int getY() {
-        int index;
-        for (int i = 0; i < roomArray.size(); i++) {
-            index = roomArray.get(i).indexOf(this);
-            if (index != -1) {
-                return index;
-            }
-        }
-        return -1;
-    }
-        */
 }

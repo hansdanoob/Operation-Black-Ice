@@ -11,8 +11,8 @@ public class LinkedArrayIterator {
     Node westNode;
     Node currentNode;
 
-    int xIndex;
-    int yIndex;
+    // int xIndex;
+    // int yIndex;
 
 
 
@@ -22,8 +22,8 @@ public class LinkedArrayIterator {
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        xIndex = 0;
-        yIndex = 0;
+        // xIndex = 0;
+        // yIndex = 0;
     }
 
     public LinkedArrayIterator(Node node) {
@@ -33,8 +33,8 @@ public class LinkedArrayIterator {
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        xIndex = 0;
-        yIndex = 0;
+        // xIndex = 0;
+        // yIndex = 0;
     }
 
 
@@ -81,7 +81,7 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        yIndex++;
+        // yIndex++;
     }
 
     public void moveSouth() {
@@ -99,7 +99,7 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        yIndex--;
+        // yIndex--;
     }
 
     public void moveEast() {
@@ -117,7 +117,7 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        xIndex++;
+        // xIndex++;
     }
 
     public void moveWest() {
@@ -135,9 +135,9 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        xIndex--;
+        // xIndex--;
     }
-   
+    /*
     public int xIndex() {
         return xIndex;
     }
@@ -145,6 +145,7 @@ public class LinkedArrayIterator {
     public int yIndex() {
         return yIndex;
     }
+    */
 
     public void set(RoomInstance room) {
         if (currentNode == null) {
@@ -159,7 +160,7 @@ public class LinkedArrayIterator {
 
             Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
 
-            newNode.setRoom(new RoomInstance(xIndex, yIndex, newNode));
+            newNode.setRoom(new RoomInstance(newNode));
             southNode.setNorth(newNode);
             northNode.setSouth(newNode);
             eastNode.setWest(newNode);

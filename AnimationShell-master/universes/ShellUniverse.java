@@ -8,6 +8,10 @@ public class ShellUniverse implements Universe {
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
+	public static LinkedArrayIterator roomArray = new LinkedArrayIterator(new Node(null, null, null, null, null)); // TEMP-------------------
+
+
+
 	public ShellUniverse () {
 
 		this.setXCenter(0);
