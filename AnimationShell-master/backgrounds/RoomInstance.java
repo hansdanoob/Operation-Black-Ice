@@ -8,11 +8,10 @@ public class RoomInstance {
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
     static final double DOOR_CHANCE = 0.6;
 
-    public static ArrayList<ArrayList<RoomInstance>> roomArray = new ArrayList<ArrayList<RoomInstance>>(); // Make into doubly linked array. Would need a 4-way iterator
+    public static LinkedArrayIterator roomArray = new LinkedArrayIterator();
 
     private ArrayList<Direction> doors = new ArrayList<>();
     private Random random = new Random();
-
 
 
     public RoomInstance(int xIndex, int yIndex) {
@@ -102,6 +101,7 @@ public class RoomInstance {
 
         RoomInstance room = null;
         try {
+            LinkedArrayIterator pointer = new LinkedArrayIterator(this);
             room = roomArray.get(xIndex-1).get(yIndex);
         } catch(Exception e) {}
         
@@ -113,7 +113,7 @@ public class RoomInstance {
         return this.doors;
     }
 
-
+    /*
     public int getX() {
         for (int i = 0; i < roomArray.size(); i++) {
             if (roomArray.get(i).indexOf(this) != -1) {
@@ -134,18 +134,5 @@ public class RoomInstance {
         }
         return -1;
     }
-
-
-    public void addToArray(int xIndex, int yIndex) {
-
-        while (roomArray.size()-1 < xIndex) {
-            roomArray.add(new ArrayList<RoomInstance>());
-        }
-
-        while (roomArray.get(xIndex).size() < yIndex) {
-            roomArray.get(xIndex).add(null);
-        }
-
-        roomArray.get(xIndex).add(this);
-    }
+        */
 }

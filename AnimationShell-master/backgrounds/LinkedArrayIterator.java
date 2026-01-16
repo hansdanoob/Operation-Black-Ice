@@ -1,7 +1,7 @@
 // import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class LinkedArray {
+public class LinkedArrayIterator {
     
     Node startingNode;
 
@@ -16,7 +16,7 @@ public class LinkedArray {
 
 
 
-    public LinkedArray() {
+    public LinkedArrayIterator() {
         currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
@@ -25,6 +25,18 @@ public class LinkedArray {
         xIndex = 0;
         yIndex = 0;
     }
+
+    public LinkedArrayIterator(Node node) {
+
+        currentNode = node;
+        northNode = currentNode.getNorth();
+        southNode = currentNode.getSouth();
+        eastNode = currentNode.getEast();
+        westNode = currentNode.getWest();
+        xIndex = 0;
+        yIndex = 0;
+    }
+
 
     public String toString() {
         return "";

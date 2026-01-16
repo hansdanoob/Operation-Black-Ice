@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ShellUniverse implements Universe {
 
 	private boolean complete = false;	
-	private DisplayableSprite player1 = null;
+	private DisplayableSprite penguin = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
@@ -12,9 +12,8 @@ public class ShellUniverse implements Universe {
 
 		this.setXCenter(0);
 		this.setYCenter(0);
-		player1 = new SimpleSprite(0,0);
-		sprites.add(player1);
-			
+		penguin = new SimpleSprite(0,0);
+		sprites.add(penguin);
 	}
 
 	public double getScale() {
