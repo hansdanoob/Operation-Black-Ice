@@ -6,7 +6,28 @@ import javax.imageio.ImageIO;
 
 public class SimpleSprite implements DisplayableSprite {
 
-	private static Image image;	
+	private static final int PERIOD_LENGTH = 200;
+	private static final int IMAGES_IN_CYCLE = 2;
+
+	private static Image[] images;
+
+	private static Image left0;
+	private static Image right0;
+	private static Image up0;
+	private static Image down0;
+	private static Image left1;
+	private static Image right1;
+	private static Image up1;
+	private static Image down1;
+	private static Image leftIdle;
+	private static Image rightIdle;
+	private static Image upIdle;
+	private static Image downIdle;
+
+	private long elapsedTime = 0;
+
+	private boolean isMoving = false;
+
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 50;
@@ -14,6 +35,20 @@ public class SimpleSprite implements DisplayableSprite {
 	private boolean dispose = false;	
 
 	private final double VELOCITY = 200;
+
+
+	private Direction direction = Direction.DOWN;
+	
+	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);
+		private int value = 0;
+		private Direction(int value) {
+			this.value = value; 
+		} 
+	};
+
+
+
+
 
 	public SimpleSprite(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
@@ -28,18 +63,71 @@ public class SimpleSprite implements DisplayableSprite {
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
-		if (image == null) {
+		if (images == null) {
 			try {
-				image = ImageIO.read(new File("AnimationShell-master/res/penguin/frontIdle.png"));
+				down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
+				down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
+				downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
+				left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
+				left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
+				leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
+				up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
+				up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
+				upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
+				right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
+				right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
+				rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
+				
 			}
 			catch (IOException e) {
-				System.out.println(e.toString());
+				System.err.println(e.toString());
 			}		
-		}		
+		}
 	}
 
 	public Image getImage() {
-		return image;
+		/*
+		 * Calculation for which image to display
+		 * 1. calculate how many periods of time have elapsed since this sprite was instantiated?
+		 * 2. calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
+		 * 3. use some conditional logic to determine the right image for the current direction
+		 */
+		long period = elapsedTime / PERIOD_LENGTH;
+		int image = (int) (period % IMAGES_IN_CYCLE);
+
+		if (isMoving) {
+			if (image == 0) {
+				if (direction == Direction.UP) {
+					return up0;
+				} else if (direction == Direction.DOWN) {
+					return down0;
+				} else if (direction == Direction.RIGHT) {
+					return right0;
+				} else {
+					return left0;
+				}
+			} else {
+				if (direction == Direction.UP) {
+					return up1;
+				} else if (direction == Direction.DOWN) {
+					return down1;
+				} else if (direction == Direction.RIGHT) {
+					return right1;
+				} else {
+					return left1;
+				}
+			}
+		} else {
+			if (direction == Direction.UP) {
+				return upIdle;
+			} else if (direction == Direction.DOWN) {
+				return downIdle;
+			} else if (direction == Direction.RIGHT) {
+				return rightIdle;
+			} else {
+				return leftIdle;
+			}
+		}
 	}
 	
 	//DISPLAYABLE
@@ -86,27 +174,41 @@ public class SimpleSprite implements DisplayableSprite {
 	}
 
 	public void update(Universe universe, long actual_delta_time) {
+
+		elapsedTime += actual_delta_time;
 		
 		double velocityX = 0;
 		double velocityY = 0;
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
+		if (!(keyboard.keyDown(37)) && !(keyboard.keyDown(38)) && !(keyboard.keyDown(39)) && !(keyboard.keyDown(40))) {
+			isMoving = false;
+		}
+
 		//LEFT	
 		if (keyboard.keyDown(37)) {
 			velocityX = -VELOCITY;
+			direction = Direction.LEFT;
+			isMoving = true;
 		}
 		//UP
 		if (keyboard.keyDown(38)) {
-			velocityY = -VELOCITY;			
+			velocityY = -VELOCITY;
+			direction = Direction.UP;
+			isMoving = true;	
 		}
 		// RIGHT
 		if (keyboard.keyDown(39)) {
 			velocityX += VELOCITY;
+			direction = Direction.RIGHT;
+			isMoving = true;
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
-			velocityY += VELOCITY;			
+			velocityY += VELOCITY;
+			direction = Direction.DOWN;
+			isMoving = true;	
 		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
