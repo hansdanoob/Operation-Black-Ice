@@ -178,34 +178,34 @@ public class SimpleSprite implements DisplayableSprite {
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
-		if (!(keyboard.keyDown(37)) && !(keyboard.keyDown(38)) && !(keyboard.keyDown(39)) && !(keyboard.keyDown(40))) {
-			isMoving = false;
-		}
-
 		//LEFT	
 		if (keyboard.keyDown(37)) {
 			velocityX = -VELOCITY;
 			direction = Direction.LEFT;
-			isMoving = true;
 		}
 		//UP
 		if (keyboard.keyDown(38)) {
 			velocityY = -VELOCITY;
 			direction = Direction.UP;
-			isMoving = true;	
 		}
 		// RIGHT
 		if (keyboard.keyDown(39)) {
 			velocityX += VELOCITY;
 			direction = Direction.RIGHT;
-			isMoving = true;
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
 			velocityY += VELOCITY;
-			direction = Direction.DOWN;
-			isMoving = true;	
+			direction = Direction.DOWN;	
 		}
+
+
+		if (velocityX != 0 || velocityY != 0) {
+			isMoving = true;
+		} else {
+			isMoving = false;
+		}
+
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
         this.centerX += deltaX;
