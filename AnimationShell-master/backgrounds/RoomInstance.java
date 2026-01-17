@@ -42,6 +42,11 @@ public class RoomInstance {
         }
     }
 
+    public RoomInstance(Node parentNode, ArrayList<Direction> doors) {
+        this.parentNode = parentNode;
+        this.doors = doors;
+    }
+
 
 
     public RoomInstance[] getNeighbours() {
