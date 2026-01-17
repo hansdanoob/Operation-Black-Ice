@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SimpleSprite implements DisplayableSprite {
+public class PenguinSprite implements DisplayableSprite {
 
 	private static final int PERIOD_LENGTH = 200;
 	private static final int IMAGES_IN_CYCLE = 2;
@@ -48,7 +48,7 @@ public class SimpleSprite implements DisplayableSprite {
 
 
 
-	public SimpleSprite(double centerX, double centerY, double height, double width) {
+	public PenguinSprite(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
 		
 		this.height = height;
@@ -56,7 +56,7 @@ public class SimpleSprite implements DisplayableSprite {
 	}
 
 	
-	public SimpleSprite(double centerX, double centerY) {
+	public PenguinSprite(double centerX, double centerY) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;

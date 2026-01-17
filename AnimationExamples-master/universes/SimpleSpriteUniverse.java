@@ -16,7 +16,7 @@ public class SimpleSpriteUniverse implements Universe {
 		 * Constructors truly "create" the universe.
 		 */
 		
-		player1 = new SimpleSprite(0,0);
+		player1 = new PenguinSprite(0,0);
 
 		/*
 		 * The order in which sprites are added to the sprites list matters. Sprites added earlier will have a lower

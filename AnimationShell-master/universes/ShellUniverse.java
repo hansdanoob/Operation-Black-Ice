@@ -16,7 +16,7 @@ public class ShellUniverse implements Universe {
 
 		this.setXCenter(0);
 		this.setYCenter(0);
-		penguin = new SimpleSprite(0,0);
+		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
 	}
 

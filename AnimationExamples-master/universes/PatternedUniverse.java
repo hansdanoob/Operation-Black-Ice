@@ -14,7 +14,7 @@ public class PatternedUniverse implements Universe {
 		backgrounds =new ArrayList<Background>();
 		backgrounds.add(background);
 
-		player1 = new SimpleSprite(0,0);
+		player1 = new PenguinSprite(0,0);
 		sprites.add(player1);
 	
 	}
