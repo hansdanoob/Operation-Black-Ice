@@ -11,30 +11,33 @@ public class LinkedArrayIterator {
     Node westNode;
     Node currentNode;
 
+    int xPosition;
+    int yPosition;
+
     // int xIndex;
     // int yIndex;
 
 
 
-    public LinkedArrayIterator() {
+    public LinkedArrayIterator(int xPosition, int yPosition) {
         currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        // xIndex = 0;
-        // yIndex = 0;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
-    public LinkedArrayIterator(Node node) {
+    public LinkedArrayIterator(Node node) { // for starting node
 
         currentNode = node;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        // xIndex = 0;
-        // yIndex = 0;
+        xPosition = 0;
+        yPosition = 0;
     }
 
 
@@ -68,10 +71,6 @@ public class LinkedArrayIterator {
 
     public void moveNorth() {
 
-        if (northNode == null) {
-            throw new NoSuchElementException();
-        }
-
         Node nextNode = northNode;
 
         // new references
@@ -81,14 +80,10 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        // yIndex++;
+        yPosition -= ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveSouth() {
-
-        if (southNode == null) {
-            throw new NoSuchElementException();
-        }
 
         Node nextNode = southNode;
 
@@ -99,14 +94,10 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        // yIndex--;
+        yPosition += ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveEast() {
-
-        if (eastNode == null) {
-            throw new NoSuchElementException();
-        }
 
         Node nextNode = eastNode;
 
@@ -117,14 +108,10 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        // xIndex++;
+        xPosition += ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveWest() {
-
-        if (westNode == null) {
-            throw new NoSuchElementException();
-        }
 
         Node nextNode = westNode;
 
@@ -135,17 +122,17 @@ public class LinkedArrayIterator {
         eastNode = nextNode.getEast();
         westNode = nextNode.getWest();
 
-        // xIndex--;
+        xPosition -= ShellUniverse.ROOM_DISTANCE;
     }
-    /*
-    public int xIndex() {
-        return xIndex;
+    
+    public int xPosition() {
+        return xPosition;
     }
 
-    public int yIndex() {
-        return yIndex;
+    public int yPosition() {
+        return yPosition;
     }
-    */
+    
 
     public void set(RoomInstance room) {
         if (currentNode == null) {
@@ -167,6 +154,8 @@ public class LinkedArrayIterator {
             westNode.setEast(newNode);
 
             currentNode = newNode;
+
+            DisplayableSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, room);
         }
     }
 }
