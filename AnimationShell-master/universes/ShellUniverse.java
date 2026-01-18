@@ -6,8 +6,7 @@ public class ShellUniverse implements Universe {
 	private boolean complete = false;	
 	private DisplayableSprite penguin = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
-	private ArrayList<RoomInstance> rooms = null;
-	private RoomInstance room = null;
+	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
 	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH));
@@ -27,11 +26,6 @@ public class ShellUniverse implements Universe {
 
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
-
-		room = startingNode.getRoom();
-		// ArrayList<DisplayableSprite> barriers = ((RoomInstance)background).getBarriers();
-		rooms = new ArrayList<RoomInstance>();
-		rooms.add(room);
 
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
@@ -64,10 +58,6 @@ public class ShellUniverse implements Universe {
 	}
 
 	public ArrayList<Background> getBackgrounds() {
-		ArrayList<Background> backgrounds = new ArrayList<>();
-		for (int i = 0; i < this.rooms.size(); i++) {
-			backgrounds.add((Background) this.rooms.get(i));
-		}
 		return backgrounds;
 	}	
 
@@ -92,8 +82,8 @@ public class ShellUniverse implements Universe {
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
         
-        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR;
-        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR;
+        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR; //implemented linear-interpolation smoothing based on online formulas and ChatGPT
+        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR; //:D
 		
 	}
 	
