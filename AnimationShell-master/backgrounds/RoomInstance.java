@@ -57,26 +57,62 @@ public class RoomInstance {
 
 
     public RoomInstance getNorth() {
-        
-        return this.parentNode.getNorth().getRoom();
+
+        Node northNode = this.parentNode.getNorth();
+
+        RoomInstance northRoom;
+        if (northNode != null) {
+            northRoom = northNode.getRoom();
+        } else {
+            northRoom = null;
+        }
+
+        return northRoom;
     }
 
 
     public RoomInstance getSouth() {
         
-        return this.parentNode.getSouth().getRoom();
+        Node southNode = this.parentNode.getSouth();
+
+        RoomInstance southRoom;
+        if (southNode != null) {
+            southRoom = southNode.getRoom();
+        } else {
+            southRoom = null;
+        }
+
+        return southRoom;
     }
 
 
     public RoomInstance getEast() {
         
-        return this.parentNode.getEast().getRoom();
+        Node eastNode = this.parentNode.getEast();
+
+        RoomInstance eastRoom;
+        if (eastNode != null) {
+            eastRoom = eastNode.getRoom();
+        } else {
+            eastRoom = null;
+        }
+
+        return eastRoom;
     }
 
 
     public RoomInstance getWest() {
         
-        return this.parentNode.getWest().getRoom();
+        Node westNode = this.parentNode.getWest();
+
+        RoomInstance westRoom;
+        if (westNode != null) {
+            westRoom = westNode.getRoom();
+        } else {
+            westRoom = null;
+        }
+
+        return westRoom;
     }
 
 

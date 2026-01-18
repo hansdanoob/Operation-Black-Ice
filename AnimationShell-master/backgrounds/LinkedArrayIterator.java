@@ -11,30 +11,33 @@ public class LinkedArrayIterator {
     Node westNode;
     Node currentNode;
 
+    int xPosition;
+    int yPosition;
+
     // int xIndex;
     // int yIndex;
 
 
 
-    public LinkedArrayIterator() {
+    public LinkedArrayIterator(int xPosition, int yPosition) {
         currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        // xIndex = 0;
-        // yIndex = 0;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
-    public LinkedArrayIterator(Node node) {
+    public LinkedArrayIterator(Node node) { // for starting node
 
         currentNode = node;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        // xIndex = 0;
-        // yIndex = 0;
+        xPosition = 0;
+        yPosition = 0;
     }
 
 
@@ -68,84 +71,96 @@ public class LinkedArrayIterator {
 
     public void moveNorth() {
 
-        if (northNode == null) {
-            throw new NoSuchElementException();
-        }
-
         Node nextNode = northNode;
 
         // new references
+        if (nextNode != null) {
+            northNode = nextNode.getNorth();
+            southNode = nextNode.getSouth();
+            eastNode = nextNode.getEast();
+            westNode = nextNode.getWest();
+        } else {
+            northNode = null;
+            southNode = currentNode;
+            eastNode = null;
+            westNode = null;
+        }
         currentNode = nextNode;
-        northNode = nextNode.getNorth();
-        southNode = nextNode.getSouth();
-        eastNode = nextNode.getEast();
-        westNode = nextNode.getWest();
 
-        // yIndex++;
+        yPosition -= ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveSouth() {
 
-        if (southNode == null) {
-            throw new NoSuchElementException();
-        }
-
         Node nextNode = southNode;
 
         // new references
+        if (nextNode != null) {
+            northNode = nextNode.getNorth();
+            southNode = nextNode.getSouth();
+            eastNode = nextNode.getEast();
+            westNode = nextNode.getWest();
+        } else {
+            northNode = currentNode;
+            southNode = null;
+            eastNode = null;
+            westNode = null;
+        }
         currentNode = nextNode;
-        northNode = nextNode.getNorth();
-        southNode = nextNode.getSouth();
-        eastNode = nextNode.getEast();
-        westNode = nextNode.getWest();
 
-        // yIndex--;
+        yPosition += ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveEast() {
 
-        if (eastNode == null) {
-            throw new NoSuchElementException();
-        }
-
         Node nextNode = eastNode;
 
         // new references
+        if (nextNode != null) {
+            northNode = nextNode.getNorth();
+            southNode = nextNode.getSouth();
+            eastNode = nextNode.getEast();
+            westNode = nextNode.getWest();
+        } else {
+            northNode = null;
+            southNode = null;
+            eastNode = null;
+            westNode = currentNode;
+        }
         currentNode = nextNode;
-        northNode = nextNode.getNorth();
-        southNode = nextNode.getSouth();
-        eastNode = nextNode.getEast();
-        westNode = nextNode.getWest();
 
-        // xIndex++;
+        xPosition += ShellUniverse.ROOM_DISTANCE;
     }
 
     public void moveWest() {
 
-        if (westNode == null) {
-            throw new NoSuchElementException();
-        }
-
         Node nextNode = westNode;
 
         // new references
+        if (nextNode != null) {
+            northNode = nextNode.getNorth();
+            southNode = nextNode.getSouth();
+            eastNode = nextNode.getEast();
+            westNode = nextNode.getWest();
+        } else {
+            northNode = null;
+            southNode = null;
+            eastNode = currentNode;
+            westNode = null;
+        }
         currentNode = nextNode;
-        northNode = nextNode.getNorth();
-        southNode = nextNode.getSouth();
-        eastNode = nextNode.getEast();
-        westNode = nextNode.getWest();
 
-        // xIndex--;
+        xPosition -= ShellUniverse.ROOM_DISTANCE;
     }
-    /*
-    public int xIndex() {
-        return xIndex;
+    
+    public int xPosition() {
+        return xPosition;
     }
 
-    public int yIndex() {
-        return yIndex;
+    public int yPosition() {
+        return yPosition;
     }
-    */
+    
 
     public void set(RoomInstance room) {
         if (currentNode == null) {
@@ -161,12 +176,35 @@ public class LinkedArrayIterator {
             Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
 
             newNode.setRoom(new RoomInstance(newNode));
-            southNode.setNorth(newNode);
-            northNode.setSouth(newNode);
-            eastNode.setWest(newNode);
-            westNode.setEast(newNode);
+
+            try {
+                southNode.setNorth(newNode);
+            } catch (Exception e) {
+
+            }
+
+            try {
+                northNode.setSouth(newNode);
+            } catch (Exception e) {
+                
+            }
+
+            try {
+                westNode.setEast(newNode);
+            } catch (Exception e) {
+                
+            }
+
+            try {
+                eastNode.setWest(newNode);
+            } catch (Exception e) {
+                
+            }
 
             currentNode = newNode;
+
+            DisplayableSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, room);
+            ShellUniverse.roomsToAdd.add(roomSprite);
         }
     }
 }

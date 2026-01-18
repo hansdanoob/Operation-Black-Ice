@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class ShellUniverse implements Universe {
 
-	private boolean complete = false;	
+	private boolean complete = false;
 	private DisplayableSprite penguin = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
@@ -11,11 +11,16 @@ public class ShellUniverse implements Universe {
 
 	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH));
 	public static Node startingNode;
+	public static RoomSprite startingRoom;
 	public static LinkedArrayIterator roomArrayIterator;
 
 	private double centerX;
 	private double centerY;
 	private static final double SMOOTHING_FACTOR = 0.03;
+
+	public static final int ROOM_DISTANCE = 100;
+
+	public static ArrayList<DisplayableSprite> roomsToAdd = new ArrayList<DisplayableSprite>();
 
 
 
@@ -27,8 +32,26 @@ public class ShellUniverse implements Universe {
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
 
+		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());
+		sprites.add(startingRoom);
+
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
+
+
+		// TEMP -----------------------------------------------------
+		roomArrayIterator.moveNorth();
+		roomArrayIterator.addRoom();
+
+		roomArrayIterator.moveEast();
+		roomArrayIterator.addRoom();
+
+		roomArrayIterator.moveEast();
+		roomArrayIterator.addRoom();
+
+		roomArrayIterator.moveSouth();
+		roomArrayIterator.addRoom();
+
 	}
 
 	public double getScale() {
@@ -78,6 +101,13 @@ public class ShellUniverse implements Universe {
 		
 		disposeSprites();
 
+		// add all newly generated rooms
+		this.sprites.remove(penguin);
+		for (int i = 0; i < roomsToAdd.size(); i++) {
+			this.sprites.add(roomsToAdd.get(i));
+		}
+		roomsToAdd.clear();
+		this.sprites.add(penguin);
 
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
