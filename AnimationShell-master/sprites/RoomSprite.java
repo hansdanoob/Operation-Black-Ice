@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -17,7 +18,7 @@ public class RoomSprite implements DisplayableSprite {
     private RoomInstance roomInstance;
 
 	
-	public RoomSprite(double centerX, double centerY, RoomInstance room) {
+	public RoomSprite(double centerX, double centerY, RoomInstance room, boolean isHallway) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -25,7 +26,11 @@ public class RoomSprite implements DisplayableSprite {
 		
 		if (image == null) {
 			try {
-				image = ImageIO.read(new File("AnimationShell-master/res/ROOM.png"));
+				if (!isHallway) {
+					image = ImageIO.read(new File("AnimationShell-master/res/ROOM.png"));
+				} else {
+					image = ImageIO.read(new File("AnimationShell-master/res/HALLWAY.png"));
+				}
 			}
 			catch (IOException e) {
 				System.out.println(e.toString());
@@ -87,6 +92,10 @@ public class RoomSprite implements DisplayableSprite {
 
 	public void update(Universe universe, long actual_delta_time) {
 				
+	}
+
+	public void addHallways() {
+		ArrayList<Direction> doors = this.roomInstance.getDoors();
 	}
 
 }

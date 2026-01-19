@@ -51,7 +51,7 @@ public class ShellUniverse implements Universe {
 		eastIterator.setDeltaX(ROOM_DISTANCE);
 		westIterator.setDeltaX(-ROOM_DISTANCE);
 
-		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());
+		startingRoom = new RoomSprite(0, 0, startingNode.getRoom(), false);
 		sprites.add(startingRoom);
 
 		penguin = new PenguinSprite(0,0);

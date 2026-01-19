@@ -204,7 +204,7 @@ public class LinkedArrayIterator {
 
             currentNode = newNode;
 
-            DisplayableSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, room);
+            DisplayableSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, room, false);
             ShellUniverse.roomsToAdd.add(roomSprite);
         }
     }
