@@ -46,6 +46,10 @@ public class ShellUniverse implements Universe {
 		southIterator.moveSouth();
 		eastIterator.moveEast();
 		westIterator.moveWest();
+		northIterator.setDeltaY(-ROOM_DISTANCE);
+		southIterator.setDeltaY(ROOM_DISTANCE);
+		eastIterator.setDeltaX(ROOM_DISTANCE);
+		westIterator.setDeltaX(-ROOM_DISTANCE);
 
 		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());
 		sprites.add(startingRoom);
@@ -120,7 +124,7 @@ public class ShellUniverse implements Universe {
 		disposeSprites();
 
 		// add all newly generated rooms
-		this.sprites.remove(penguin);
+		this.sprites.remove(this.sprites.size()-1); // remove then later place player at end of list, to move to front
 		for (int i = 0; i < roomsToAdd.size(); i++) {
 			this.sprites.add(roomsToAdd.get(i));
 		}
@@ -130,14 +134,15 @@ public class ShellUniverse implements Universe {
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
         
-        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR; //implemented linear-interpolation smoothing based on online formulas and ChatGPT
-        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR; //:D
+        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR;
+        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR;
 
 		roomArrayIterator.refreshPenguinTracking();
+		northIterator.refreshPenguinTracking();
+		southIterator.refreshPenguinTracking();
+		eastIterator.refreshPenguinTracking();
+		westIterator.refreshPenguinTracking();
 
-		// TEST:
-
-		//roomArrayIterator.addRoom();
 		northIterator.addRoom();
 		southIterator.addRoom();
 		eastIterator.addRoom();

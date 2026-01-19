@@ -14,8 +14,8 @@ public class LinkedArrayIterator {
     int xPosition;
     int yPosition;
 
-    // int xIndex;
-    // int yIndex;
+    int deltaX = 0;
+    int deltaY = 0;
 
 
 
@@ -211,8 +211,8 @@ public class LinkedArrayIterator {
 
     public void refreshPenguinTracking() {
         int[] target = PenguinSprite.getNearestGridPoint();
-        int targetX = target[0];
-        int targetY = target[1];
+        int targetX = target[0] + this.deltaX;
+        int targetY = target[1] + this.deltaY;
 
 
         if (targetX < this.xPosition) {
@@ -226,5 +226,13 @@ public class LinkedArrayIterator {
         } else if (targetY > this.yPosition) {
             this.moveSouth();
         }
+    }
+
+    public void setDeltaX(int delta) {
+        this.deltaX = delta;
+    }
+
+    public void setDeltaY(int delta) {
+        this.deltaY = delta;
     }
 }
