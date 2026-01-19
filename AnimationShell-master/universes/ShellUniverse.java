@@ -124,7 +124,7 @@ public class ShellUniverse implements Universe {
 		disposeSprites();
 
 		// add all newly generated rooms
-		this.sprites.remove(this.sprites.size()-1); // remove then later place player at end of list, to move to front
+		this.sprites.remove(this.sprites.size()-1); // temporarily remove player, then add back at end of list, to ensure it is the front sprite
 		for (int i = 0; i < roomsToAdd.size(); i++) {
 			this.sprites.add(roomsToAdd.get(i));
 		}
