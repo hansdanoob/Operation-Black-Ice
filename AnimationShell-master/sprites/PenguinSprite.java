@@ -37,7 +37,7 @@ public class PenguinSprite implements DisplayableSprite {
 
 	private Direction direction = Direction.DOWN;
 	
-	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);
+	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);												// comment needed to ensure that i properly fixed a git mistake
 		private int value = 0;
 		private Direction(int value) {
 			this.value = value; 

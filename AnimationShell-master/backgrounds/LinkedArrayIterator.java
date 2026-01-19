@@ -19,7 +19,7 @@ public class LinkedArrayIterator {
 
 
 
-    public LinkedArrayIterator(int xPosition, int yPosition) {
+    public LinkedArrayIterator(int xPosition, int yPosition) {												// comment needed to ensure that i properly fixed a git mistake
         currentNode = startingNode;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
@@ -200,6 +200,7 @@ public class LinkedArrayIterator {
             } catch (Exception e) {
                 
             }
+
 
             currentNode = newNode;
 

@@ -9,7 +9,7 @@ public class Node
 
 	private static long roomCount = 0;
 	
-	public Node(RoomInstance room, Node north, Node south, Node east, Node west)
+	public Node(RoomInstance room, Node north, Node south, Node east, Node west)												// comment needed to ensure that i properly fixed a git mistake
 	{
 		this.room = room;
 		roomCount++;

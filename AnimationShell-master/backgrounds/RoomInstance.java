@@ -13,7 +13,7 @@ public class RoomInstance {
     private Node parentNode;
 
 
-    public RoomInstance(Node parentNode) {
+    public RoomInstance(Node parentNode) {												// comment needed to ensure that i properly fixed a git mistake
 
         this.parentNode = parentNode;
 
@@ -29,6 +29,7 @@ public class RoomInstance {
                 }
             }
         }
+
 
 
         // add random new doors

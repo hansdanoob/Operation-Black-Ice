@@ -17,7 +17,7 @@ public class RoomSprite implements DisplayableSprite {
     private RoomInstance roomInstance;
 
 	
-	public RoomSprite(double centerX, double centerY, RoomInstance room) {
+	public RoomSprite(double centerX, double centerY, RoomInstance room) {												// comment needed to ensure that i properly fixed a git mistake
 
 		this.centerX = centerX;
 		this.centerY = centerY;
