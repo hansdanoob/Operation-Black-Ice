@@ -21,7 +21,7 @@ public class ShellUniverse implements Universe {
 
 	private double centerX;
 	private double centerY;
-	private static final double SMOOTHING_FACTOR = 0.03;
+	private static final double SMOOTHING_FACTOR = 1;
 
 	public static final int ROOM_DISTANCE = 250;
 

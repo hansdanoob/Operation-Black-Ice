@@ -21,10 +21,15 @@ public class PenguinSprite implements DisplayableSprite {
 	private static Image rightIdle;
 	private static Image upIdle;
 	private static Image downIdle;
+	private static Image leftSlide;
+	private static Image rightSlide;
+	private static Image upSlide;
+	private static Image downSlide;
 
 	private long elapsedTime = 0;
 
 	private boolean isMoving = false;
+	private boolean isSliding = false;
 
 	private static double centerX = 0;
 	private static double centerY = 0;
@@ -32,17 +37,19 @@ public class PenguinSprite implements DisplayableSprite {
 	private double height = 32;
 	private boolean dispose = false;	
 
-	private final double VELOCITY = 150;
+	private final double WADDLE_VELOCITY = 150;
+	private final double SLIDE_VELOCITY = 500;
+	private double velocity = WADDLE_VELOCITY;
 
 
 	private Direction direction = Direction.DOWN;
 	
-	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);	
-		private int value = 0;
-		private Direction(int value) {
-			this.value = value; 
-		} 
-	};
+	private enum Direction { 
+		UP, 
+		DOWN, 
+		LEFT,
+		RIGHT
+	}
 
 
 
@@ -56,24 +63,28 @@ public class PenguinSprite implements DisplayableSprite {
 	}
 
 	
-	public PenguinSprite(double centerX, double centerY) {
+	public PenguinSprite(double centerXin, double centerYin) {
 
-		this.centerX = centerX;
-		this.centerY = centerY;
+		centerX = centerXin;
+		centerY = centerYin;
 		
 		try {
 			down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
 			down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
 			downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
+			downSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-down.png"));
 			left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
 			left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
 			leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
+			leftSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-left.png"));
 			up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
 			up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
 			upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
+			upSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-up.png"));
 			right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
 			right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
 			rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
+			rightSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-right.png"));
 			
 		}
 		catch (IOException e) {
@@ -91,7 +102,19 @@ public class PenguinSprite implements DisplayableSprite {
 		long period = elapsedTime / PERIOD_LENGTH;
 		int image = (int) (period % IMAGES_IN_CYCLE);
 
-		if (isMoving) {
+		
+
+		if (isSliding) {
+			if (direction == Direction.UP) {
+				return upSlide;
+			} else if (direction == Direction.DOWN) {
+				return downSlide;
+			} else if (direction == Direction.RIGHT) {
+				return rightSlide;
+			} else {
+				return leftSlide;
+			}
+		} else if (isMoving) {
 			if (image == 0) {
 				if (direction == Direction.UP) {
 					return up0;
@@ -178,24 +201,36 @@ public class PenguinSprite implements DisplayableSprite {
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
+		// SPACE
+		if (keyboard.keyDown(16)) {
+			isSliding = true;
+			if (velocity < SLIDE_VELOCITY) {
+				velocity += 10;
+			}
+		} else {
+			isSliding = false;
+			if (velocity > WADDLE_VELOCITY) {
+				velocity -= 15;
+			}
+		}
 		//LEFT	
 		if (keyboard.keyDown(37)) {
-			velocityX = -VELOCITY;
+			velocityX = -velocity;
 			direction = Direction.LEFT;
-		}
-		//UP
-		if (keyboard.keyDown(38)) {
-			velocityY = -VELOCITY;
-			direction = Direction.UP;
 		}
 		// RIGHT
 		if (keyboard.keyDown(39)) {
-			velocityX += VELOCITY;
+			velocityX = velocity;
 			direction = Direction.RIGHT;
+		}
+		//UP
+		if (keyboard.keyDown(38)) {
+			velocityY = -velocity;
+			direction = Direction.UP;
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
-			velocityY += VELOCITY;
+			velocityY = velocity;
 			direction = Direction.DOWN;	
 		}
 
@@ -208,10 +243,10 @@ public class PenguinSprite implements DisplayableSprite {
 
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
-        this.centerX += deltaX;
+        centerX += deltaX;
 		
 		double deltaY = actual_delta_time * 0.001 * velocityY;
-    	this.centerY += deltaY;
+    	centerY += deltaY;
 
 	}
 
