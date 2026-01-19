@@ -13,7 +13,7 @@ public class RoomInstance {
     private Node parentNode;
 
 
-    public RoomInstance(Node parentNode) {												// comment needed to ensure that i properly fixed a git mistake
+    public RoomInstance(Node parentNode) {
 
         this.parentNode = parentNode;
 

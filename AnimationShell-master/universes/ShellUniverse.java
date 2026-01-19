@@ -32,7 +32,7 @@ public class ShellUniverse implements Universe {
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
 
-		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());												// comment needed to ensure that i properly fixed a git mistake
+		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());
 		sprites.add(startingRoom);
 
 		penguin = new PenguinSprite(0,0);
@@ -40,6 +40,7 @@ public class ShellUniverse implements Universe {
 
 
 		// TEMP -----------------------------------------------------
+		/*
 		roomArrayIterator.moveNorth();
 		roomArrayIterator.addRoom();
 
@@ -51,6 +52,7 @@ public class ShellUniverse implements Universe {
 
 		roomArrayIterator.moveSouth();
 		roomArrayIterator.addRoom();
+		*/
 
 
 	}
@@ -120,7 +122,7 @@ public class ShellUniverse implements Universe {
 
 		// TEST:
 
-		roomArrayIterator.addRoom();
+		//roomArrayIterator.addRoom();
 		
 	}
 	

@@ -32,12 +32,12 @@ public class PenguinSprite implements DisplayableSprite {
 	private double height = 16;
 	private boolean dispose = false;	
 
-	private final double VELOCITY = 400;
+	private final double VELOCITY = 150;
 
 
 	private Direction direction = Direction.DOWN;
 	
-	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);												// comment needed to ensure that i properly fixed a git mistake
+	private enum Direction { UP(0), DOWN(1), LEFT(2), RIGHT(3);	
 		private int value = 0;
 		private Direction(int value) {
 			this.value = value; 
