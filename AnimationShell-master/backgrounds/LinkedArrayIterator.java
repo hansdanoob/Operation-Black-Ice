@@ -236,4 +236,8 @@ public class LinkedArrayIterator {
     public void setDeltaY(int delta) {
         this.deltaY = delta;
     }
+
+    public Node getCurrentNode() {
+        return this.currentNode;
+    }
 }
