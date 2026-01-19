@@ -14,6 +14,11 @@ public class ShellUniverse implements Universe {
 	public static RoomSprite startingRoom;
 	public static LinkedArrayIterator roomArrayIterator;
 
+	public static LinkedArrayIterator northIterator;
+	public static LinkedArrayIterator southIterator;
+	public static LinkedArrayIterator eastIterator;
+	public static LinkedArrayIterator westIterator;
+
 	private double centerX;
 	private double centerY;
 	private static final double SMOOTHING_FACTOR = 0.03;
@@ -31,6 +36,16 @@ public class ShellUniverse implements Universe {
 
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
+
+		// initialize four surranunding iterators at center, then move them
+		northIterator = new LinkedArrayIterator(startingNode);
+		southIterator = new LinkedArrayIterator(startingNode);
+		eastIterator = new LinkedArrayIterator(startingNode);
+		westIterator = new LinkedArrayIterator(startingNode);
+		northIterator.moveNorth();
+		southIterator.moveSouth();
+		eastIterator.moveEast();
+		westIterator.moveWest();
 
 		startingRoom = new RoomSprite(0, 0, startingNode.getRoom());
 		sprites.add(startingRoom);
@@ -123,6 +138,10 @@ public class ShellUniverse implements Universe {
 		// TEST:
 
 		//roomArrayIterator.addRoom();
+		northIterator.addRoom();
+		southIterator.addRoom();
+		eastIterator.addRoom();
+		westIterator.addRoom();
 		
 	}
 	

@@ -28,8 +28,8 @@ public class PenguinSprite implements DisplayableSprite {
 
 	private static double centerX = 0;
 	private static double centerY = 0;
-	private double width = 16;
-	private double height = 16;
+	private double width = 32;
+	private double height = 32;
 	private boolean dispose = false;	
 
 	private final double VELOCITY = 150;
