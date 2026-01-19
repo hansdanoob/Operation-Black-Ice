@@ -26,13 +26,13 @@ public class PenguinSprite implements DisplayableSprite {
 
 	private boolean isMoving = false;
 
-	private double centerX = 0;
-	private double centerY = 0;
+	private static double centerX = 0;
+	private static double centerY = 0;
 	private double width = 16;
 	private double height = 16;
 	private boolean dispose = false;	
 
-	private final double VELOCITY = 150;
+	private final double VELOCITY = 400;
 
 
 	private Direction direction = Direction.DOWN;
@@ -219,6 +219,19 @@ public class PenguinSprite implements DisplayableSprite {
 	@Override
 	public void setDispose(boolean dispose) {
 		this.dispose = true;
+	}
+
+	public static int[] getNearestGridPoint() {
+
+		int gridX = (int) Math.round(centerX / ShellUniverse.ROOM_DISTANCE);
+        int gridY = (int) Math.round(centerY / ShellUniverse.ROOM_DISTANCE);
+
+        int closestX = gridX * ShellUniverse.ROOM_DISTANCE;
+        int closestY = gridY * ShellUniverse.ROOM_DISTANCE;
+
+		int[] coords = {closestX, closestY};
+
+		return coords;
 	}
 
 }

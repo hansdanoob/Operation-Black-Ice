@@ -208,4 +208,23 @@ public class LinkedArrayIterator {
             ShellUniverse.roomsToAdd.add(roomSprite);
         }
     }
+
+    public void refreshPenguinTracking() {
+        int[] target = PenguinSprite.getNearestGridPoint();
+        int targetX = target[0];
+        int targetY = target[1];
+
+
+        if (targetX < this.xPosition) {
+            this.moveWest();
+        } else if (targetX > this.xPosition) {
+            this.moveEast();
+        }
+
+        if (targetY < this.yPosition) {
+            this.moveNorth();
+        } else if (targetY > this.yPosition) {
+            this.moveSouth();
+        }
+    }
 }

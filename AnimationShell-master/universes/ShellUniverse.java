@@ -115,6 +115,12 @@ public class ShellUniverse implements Universe {
         
         this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR; //implemented linear-interpolation smoothing based on online formulas and ChatGPT
         this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR; //:D
+
+		roomArrayIterator.refreshPenguinTracking();
+
+		// TEST:
+
+		roomArrayIterator.addRoom();
 		
 	}
 	
