@@ -28,6 +28,8 @@ public class RoomSprite implements DisplayableSprite {
 			try {
 				if (!isHallway) {
 					image = ImageIO.read(new File("AnimationShell-master/res/ROOM.png"));
+					width = 100;
+					height = 100;
 				} else {
 					image = ImageIO.read(new File("AnimationShell-master/res/HALLWAY.png"));
 				}
@@ -96,6 +98,20 @@ public class RoomSprite implements DisplayableSprite {
 
 	public void addHallways() {
 		ArrayList<Direction> doors = this.roomInstance.getDoors();
+
+		if (doors.contains(Direction.NORTH)) {
+			RoomSprite hallwayNorth = new RoomSprite(this.centerX, this.centerY - (ShellUniverse.ROOM_DISTANCE / 2), null, true);
+			ShellUniverse.roomsToAdd.add(hallwayNorth);
+		} else if (doors.contains(Direction.SOUTH)) {
+			RoomSprite hallwaySouth = new RoomSprite(this.centerX, this.centerY + (ShellUniverse.ROOM_DISTANCE / 2), null, true);
+			ShellUniverse.roomsToAdd.add(hallwaySouth);
+		} else if (doors.contains(Direction.EAST)) {
+			RoomSprite hallwayEast = new RoomSprite(this.centerX + (ShellUniverse.ROOM_DISTANCE / 2), this.centerY, null, true);
+			ShellUniverse.roomsToAdd.add(hallwayEast);
+		} else if (doors.contains(Direction.WEST)) {
+			RoomSprite hallwayWest = new RoomSprite(this.centerX - (ShellUniverse.ROOM_DISTANCE / 2), this.centerY, null, true);
+			ShellUniverse.roomsToAdd.add(hallwayWest);
+		}
 	}
 
 }

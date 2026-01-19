@@ -23,7 +23,7 @@ public class ShellUniverse implements Universe {
 	private double centerY;
 	private static final double SMOOTHING_FACTOR = 0.03;
 
-	public static final int ROOM_DISTANCE = 100;
+	public static final int ROOM_DISTANCE = 250;
 
 	public static ArrayList<DisplayableSprite> roomsToAdd = new ArrayList<DisplayableSprite>();
 
