@@ -21,7 +21,7 @@ public class ShellUniverse implements Universe {
 
 	private double centerX;
 	private double centerY;
-	private static final double SMOOTHING_FACTOR = 0.03;
+	public static double smoothingFactor = 0.03;
 
 	public static final int ROOM_DISTANCE = 250;
 
@@ -135,8 +135,8 @@ public class ShellUniverse implements Universe {
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
         
-        this.centerX += (playerX - this.centerX) * SMOOTHING_FACTOR;
-        this.centerY += (playerY - this.centerY) * SMOOTHING_FACTOR;
+        this.centerX += (playerX - this.centerX) * smoothingFactor;
+        this.centerY += (playerY - this.centerY) * smoothingFactor;
 
 		roomArrayIterator.refreshPenguinTracking();
 		northIterator.refreshPenguinTracking();

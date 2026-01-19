@@ -204,33 +204,35 @@ public class PenguinSprite implements DisplayableSprite {
 		// SPACE
 		if (keyboard.keyDown(16)) {
 			isSliding = true;
+			ShellUniverse.smoothingFactor = 0.06;
 			if (velocity < SLIDE_VELOCITY) {
 				velocity += 10;
 			}
 		} else {
 			isSliding = false;
+			ShellUniverse.smoothingFactor = 0.03;
 			if (velocity > WADDLE_VELOCITY) {
 				velocity -= 15;
 			}
 		}
 		//LEFT	
 		if (keyboard.keyDown(37)) {
-			velocityX = -velocity;
+			velocityX += -velocity;
 			direction = Direction.LEFT;
 		}
 		// RIGHT
 		if (keyboard.keyDown(39)) {
-			velocityX = velocity;
+			velocityX += velocity;
 			direction = Direction.RIGHT;
 		}
 		//UP
 		if (keyboard.keyDown(38)) {
-			velocityY = -velocity;
+			velocityY += -velocity;
 			direction = Direction.UP;
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
-			velocityY = velocity;
+			velocityY += velocity;
 			direction = Direction.DOWN;	
 		}
 
