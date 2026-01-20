@@ -17,15 +17,15 @@ public class LinkedArrayIterator {
 
 
 
-    public LinkedArrayIterator(Node node) { // for starting node
+    public LinkedArrayIterator(Node node) {
 
         currentNode = node;
         northNode = currentNode.getNorth();
         southNode = currentNode.getSouth();
         eastNode = currentNode.getEast();
         westNode = currentNode.getWest();
-        xPosition = 0;
-        yPosition = 0;
+        this.xPosition = 0;
+        this.yPosition = 0;
     }
 
 
@@ -68,7 +68,6 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
-            // ---------------------------------- Potential issue causing spot
             northNode = null; 
             southNode = currentNode;
             eastNode = null;
@@ -185,7 +184,7 @@ public class LinkedArrayIterator {
 
             currentNode = newNode;
 
-            RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom(), false);
+            RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
             ShellUniverse.roomsToAdd.add(roomSprite);
             roomSprite.addHallways();
         }

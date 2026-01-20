@@ -42,14 +42,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private double velocity = WADDLE_VELOCITY;
 
 
-	private Direction direction = Direction.DOWN;
-	
-	private enum Direction { 
-		UP, 
-		DOWN, 
-		LEFT,
-		RIGHT
-	}
+	private Direction direction = Direction.SOUTH;
 
 
 
@@ -105,43 +98,43 @@ public class PenguinSprite implements DisplayableSprite {
 		
 
 		if (isSliding) {
-			if (direction == Direction.UP) {
+			if (direction == Direction.NORTH) {
 				return upSlide;
-			} else if (direction == Direction.DOWN) {
+			} else if (direction == Direction.SOUTH) {
 				return downSlide;
-			} else if (direction == Direction.RIGHT) {
+			} else if (direction == Direction.EAST) {
 				return rightSlide;
 			} else {
 				return leftSlide;
 			}
 		} else if (isMoving) {
 			if (image == 0) {
-				if (direction == Direction.UP) {
+				if (direction == Direction.NORTH) {
 					return up0;
-				} else if (direction == Direction.DOWN) {
+				} else if (direction == Direction.SOUTH) {
 					return down0;
-				} else if (direction == Direction.RIGHT) {
+				} else if (direction == Direction.EAST) {
 					return right0;
 				} else {
 					return left0;
 				}
 			} else {
-				if (direction == Direction.UP) {
+				if (direction == Direction.NORTH) {
 					return up1;
-				} else if (direction == Direction.DOWN) {
+				} else if (direction == Direction.SOUTH) {
 					return down1;
-				} else if (direction == Direction.RIGHT) {
+				} else if (direction == Direction.EAST) {
 					return right1;
 				} else {
 					return left1;
 				}
 			}
 		} else {
-			if (direction == Direction.UP) {
+			if (direction == Direction.NORTH) {
 				return upIdle;
-			} else if (direction == Direction.DOWN) {
+			} else if (direction == Direction.SOUTH) {
 				return downIdle;
-			} else if (direction == Direction.RIGHT) {
+			} else if (direction == Direction.EAST) {
 				return rightIdle;
 			} else {
 				return leftIdle;
@@ -218,22 +211,22 @@ public class PenguinSprite implements DisplayableSprite {
 		//LEFT	
 		if (keyboard.keyDown(37)) {
 			velocityX += -velocity;
-			direction = Direction.LEFT;
+			direction = Direction.WEST;
 		}
 		// RIGHT
 		if (keyboard.keyDown(39)) {
 			velocityX += velocity;
-			direction = Direction.RIGHT;
+			direction = Direction.EAST;
 		}
 		//UP
 		if (keyboard.keyDown(38)) {
 			velocityY += -velocity;
-			direction = Direction.UP;
+			direction = Direction.NORTH;
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
 			velocityY += velocity;
-			direction = Direction.DOWN;	
+			direction = Direction.SOUTH;	
 		}
 
 

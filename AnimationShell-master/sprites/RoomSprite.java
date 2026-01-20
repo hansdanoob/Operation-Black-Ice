@@ -22,7 +22,7 @@ public class RoomSprite implements DisplayableSprite {
     private RoomInstance roomInstance;
 
 	
-	public RoomSprite(double centerX, double centerY, RoomInstance room, boolean isHallway) {
+	public RoomSprite(double centerX, double centerY, RoomInstance room) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -30,16 +30,11 @@ public class RoomSprite implements DisplayableSprite {
 		
 		if (image == null) {
 			try {
-				if (!isHallway) {
-					createMergedImage();
+				createMergedImage();
 
-					File file = new File("AnimationShell-master/res/room/generated/file" + imageUUID + ".png");
-					image = ImageIO.read(file);
-					ShellUniverse.filesToDelete.add(file);
-
-				} else {
-					image = ImageIO.read(new File("AnimationShell-master/res/HALLWAY.png"));
-				}
+				File file = new File("AnimationShell-master/res/room/generated/file" + imageUUID + ".png");
+				image = ImageIO.read(file);
+				ShellUniverse.filesToDelete.add(file);
 			}
 			catch (IOException e) {
 				System.out.println(e.toString());

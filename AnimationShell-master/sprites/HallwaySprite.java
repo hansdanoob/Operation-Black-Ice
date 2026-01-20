@@ -20,7 +20,6 @@ public class HallwaySprite implements DisplayableSprite {
 	private double height = 400;
 	private boolean dispose = false;	
 
-    private RoomInstance roomInstance;
 
 	
 	public HallwaySprite(double centerX, double centerY, Direction directionOfDoor) {
