@@ -1,16 +1,27 @@
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /*
  * This class represents the 'graphical user interface' or 'presentation' layer or 'frame'. Its job is to continuously 
@@ -500,7 +511,7 @@ public class AnimationFrame extends JFrame {
 					paintBackground(g, background);
 				}
 			}
-
+			/*
 			if (sprites != null) {
 				for (DisplayableSprite activeSprite : sprites) {
 					DisplayableSprite sprite = activeSprite;
@@ -515,6 +526,41 @@ public class AnimationFrame extends JFrame {
 					}
 				}				
 			}
+			*/
+			if (sprites != null) {
+				for (DisplayableSprite sprite : new ArrayList<>(sprites)) {
+					if (sprite.getVisible()) {
+						if (sprite.getImage() != null) {
+							g.drawImage(
+								sprite.getImage(),
+								translateToScreenX(sprite.getMinX()),
+								translateToScreenY(sprite.getMinY()),
+								scaleLogicalX(sprite.getWidth()),
+								scaleLogicalY(sprite.getHeight()),
+								null
+							);
+						} else {
+							g.setColor(Color.BLUE);
+							g.fillRect(
+								translateToScreenX(sprite.getMinX()),
+								translateToScreenY(sprite.getMinY()),
+								scaleLogicalX(sprite.getWidth()),
+								scaleLogicalY(sprite.getHeight())
+							);
+						}
+					}
+				}
+			}
+
+
+
+
+
+
+
+
+
+
 
 			drawScreenGrid(g);
 			drawLogicalGrid(g);
