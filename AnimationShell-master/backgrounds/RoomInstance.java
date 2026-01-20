@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RoomInstance {
 
     static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
-    static final double DOOR_CHANCE = 0.3;
+    static final double DOOR_CHANCE = 0.6;
 
     private ArrayList<Direction> doors = new ArrayList<>();
     private Random random = new Random();

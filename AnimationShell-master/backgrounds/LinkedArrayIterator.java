@@ -179,27 +179,19 @@ public class LinkedArrayIterator {
 
             try {
                 southNode.setNorth(newNode);
-            } catch (Exception e) {
-
-            }
+            } catch (Exception e) {}
 
             try {
                 northNode.setSouth(newNode);
-            } catch (Exception e) {
-                
-            }
+            } catch (Exception e) {}
 
             try {
                 westNode.setEast(newNode);
-            } catch (Exception e) {
-                
-            }
+            } catch (Exception e) {}
 
             try {
                 eastNode.setWest(newNode);
-            } catch (Exception e) {
-                
-            }
+            } catch (Exception e) {}
 
 
             currentNode = newNode;

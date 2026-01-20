@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,9 +24,11 @@ public class ShellUniverse implements Universe {
 	private double centerY;
 	public static double smoothingFactor = 0.03;
 
-	public static final int ROOM_DISTANCE = 250;
+	public static final int ROOM_DISTANCE = 750;
 
 	public static ArrayList<DisplayableSprite> roomsToAdd = new ArrayList<DisplayableSprite>();
+
+	public static ArrayList<File> filesToDelete = new ArrayList<File>();
 
 
 
@@ -57,24 +60,6 @@ public class ShellUniverse implements Universe {
 
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
-
-
-		// TEMP -----------------------------------------------------
-		/*
-		roomArrayIterator.moveNorth();
-		roomArrayIterator.addRoom();
-
-		roomArrayIterator.moveEast();
-		roomArrayIterator.addRoom();
-
-		roomArrayIterator.moveEast();
-		roomArrayIterator.addRoom();
-
-		roomArrayIterator.moveSouth();
-		roomArrayIterator.addRoom();
-		*/
-
-
 	}
 
 	public double getScale() {
@@ -148,7 +133,17 @@ public class ShellUniverse implements Universe {
 		southIterator.addRoom();
 		eastIterator.addRoom();
 		westIterator.addRoom();
-		
+	}
+
+	public static void deleteImageFiles() {
+		for (int i = 0; i < filesToDelete.size(); i++) {
+			boolean deleted = filesToDelete.get(i).delete();
+			System.out.println("File deleted");
+			if (!deleted) {
+    			System.out.println("Failed to delete file");
+			}
+		}
+		filesToDelete.clear();
 	}
 	
     protected void disposeSprites() {

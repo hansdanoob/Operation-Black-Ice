@@ -37,8 +37,8 @@ public class PenguinSprite implements DisplayableSprite {
 	private double height = 32;
 	private boolean dispose = false;	
 
-	private final double WADDLE_VELOCITY = 150;
-	private final double SLIDE_VELOCITY = 500;
+	private final double WADDLE_VELOCITY = 125;
+	private final double SLIDE_VELOCITY = 400;
 	private double velocity = WADDLE_VELOCITY;
 
 

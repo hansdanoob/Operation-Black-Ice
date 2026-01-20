@@ -26,7 +26,8 @@ public class ShellAnimation implements Animation {
 
 	@Override
 	public void setComplete(boolean complete) {
-		this.animationComplete = true;		
+		this.animationComplete = true;
+		ShellUniverse.deleteImageFiles();	
 	}
 
 	@Override
