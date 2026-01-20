@@ -1,9 +1,7 @@
 // import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
 public class LinkedArrayIterator {
     
-    Node startingNode;
 
     Node northNode;
     Node southNode;
@@ -14,20 +12,10 @@ public class LinkedArrayIterator {
     int xPosition;
     int yPosition;
 
-    int deltaX = 0;
-    int deltaY = 0;
+    int deltaFromPenguinX = 0;
+    int deltaFromPenguinY = 0;
 
 
-
-    public LinkedArrayIterator(int xPosition, int yPosition) {
-        currentNode = startingNode;
-        northNode = currentNode.getNorth();
-        southNode = currentNode.getSouth();
-        eastNode = currentNode.getEast();
-        westNode = currentNode.getWest();
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-    }
 
     public LinkedArrayIterator(Node node) { // for starting node
 
@@ -80,7 +68,8 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
-            northNode = null;
+            // ---------------------------------- Potential issue causing spot
+            northNode = null; 
             southNode = currentNode;
             eastNode = null;
             westNode = null;
@@ -169,7 +158,7 @@ public class LinkedArrayIterator {
         currentNode.setRoom(room);
     }
 
-    public void addRoom() {
+    public void attemptAddRoom() {
         if (currentNode == null) {
             RoomInstance room  = null;
 
@@ -204,8 +193,8 @@ public class LinkedArrayIterator {
 
     public void refreshPenguinTracking() {
         int[] target = PenguinSprite.getNearestGridPoint();
-        int targetX = target[0] + this.deltaX;
-        int targetY = target[1] + this.deltaY;
+        int targetX = target[0] + this.deltaFromPenguinX;
+        int targetY = target[1] + this.deltaFromPenguinY;
 
 
         if (targetX < this.xPosition) {
@@ -221,15 +210,38 @@ public class LinkedArrayIterator {
         }
     }
 
-    public void setDeltaX(int delta) {
-        this.deltaX = delta;
+    public void setDeltaFromPenguinX(int delta) {
+        this.deltaFromPenguinX = delta;
     }
 
-    public void setDeltaY(int delta) {
-        this.deltaY = delta;
+    public void setDeltaFromPenguinY(int delta) {
+        this.deltaFromPenguinY = delta;
     }
 
     public Node getCurrentNode() {
         return this.currentNode;
+    }
+
+    public void updateReferences() {
+        if (this.northNode == null) {
+            try {
+                this.northNode = this.currentNode.getNorth();
+            } catch (Exception e) {}
+        }
+        if (this.southNode == null) {
+            try {
+                this.southNode = this.currentNode.getSouth();
+            } catch (Exception e) {}
+        }
+        if (this.eastNode == null) {
+            try {
+                this.eastNode = this.currentNode.getEast();
+            } catch (Exception e) {}
+        }
+        if (this.westNode == null) {
+            try {
+                this.westNode = this.currentNode.getWest();
+            } catch (Exception e) {}
+        }
     }
 }

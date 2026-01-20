@@ -49,10 +49,10 @@ public class ShellUniverse implements Universe {
 		southIterator.moveSouth();
 		eastIterator.moveEast();
 		westIterator.moveWest();
-		northIterator.setDeltaY(-ROOM_DISTANCE);
-		southIterator.setDeltaY(ROOM_DISTANCE);
-		eastIterator.setDeltaX(ROOM_DISTANCE);
-		westIterator.setDeltaX(-ROOM_DISTANCE);
+		northIterator.setDeltaFromPenguinY(-ROOM_DISTANCE);
+		southIterator.setDeltaFromPenguinY(ROOM_DISTANCE);
+		eastIterator.setDeltaFromPenguinX(ROOM_DISTANCE);
+		westIterator.setDeltaFromPenguinX(-ROOM_DISTANCE);
 
 		startingRoom = new RoomSprite(0, 0, startingNode.getRoom(), false);
 		startingRoom.addHallways();
@@ -129,10 +129,16 @@ public class ShellUniverse implements Universe {
 		eastIterator.refreshPenguinTracking();
 		westIterator.refreshPenguinTracking();
 
-		northIterator.addRoom();
-		southIterator.addRoom();
-		eastIterator.addRoom();
-		westIterator.addRoom();
+		roomArrayIterator.updateReferences();
+		northIterator.updateReferences();
+		southIterator.updateReferences();
+		eastIterator.updateReferences();
+		westIterator.updateReferences();
+
+		northIterator.attemptAddRoom();
+		southIterator.attemptAddRoom();
+		eastIterator.attemptAddRoom();
+		westIterator.attemptAddRoom();
 	}
 
 	public static void deleteImageFiles() {
