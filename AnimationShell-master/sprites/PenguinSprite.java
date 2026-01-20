@@ -195,50 +195,6 @@ public class PenguinSprite implements DisplayableSprite {
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
-		/*
-		// SPACE
-		if (keyboard.keyDown(16)) {
-			isSliding = true;
-			ShellUniverse.smoothingFactor = 0.06;
-			if (velocity < SLIDE_VELOCITY) {
-				velocity += 10;
-			}
-		} else {
-			isSliding = false;
-			ShellUniverse.smoothingFactor = 0.03;
-			if (velocity > WADDLE_VELOCITY) {
-				velocity -= 15;
-			}
-		}
-		//LEFT	
-		if (keyboard.keyDown(37)) {
-			velocityX += -velocity;
-			direction = Direction.WEST;
-		}
-		// RIGHT
-		if (keyboard.keyDown(39)) {
-			velocityX += velocity;
-			direction = Direction.EAST;
-		}
-		//UP
-		if (keyboard.keyDown(38)) {
-			velocityY += -velocity;
-			direction = Direction.NORTH;
-		}
-		// DOWN
-		if (keyboard.keyDown(40)) {
-			velocityY += velocity;
-			direction = Direction.SOUTH;	
-		}
-
-
-		if (velocityX != 0 || velocityY != 0) {
-			isMoving = true;
-		} else {
-			isMoving = false;
-		}
-		*/
-
 		// SHIFT
 		if (keyboard.keyDown(16)) {
 			isSliding = true;
@@ -293,8 +249,6 @@ public class PenguinSprite implements DisplayableSprite {
 		}
 
 
-
-
 		double targetXVelocity = 0;
 		double targetYVelocity = 0;
 		for (int i = 0; i < directionsMoving.size(); i++) {
@@ -326,7 +280,6 @@ public class PenguinSprite implements DisplayableSprite {
 		
 		double deltaY = actual_delta_time * 0.001 * velocityY;
     	centerY += deltaY;
-
 	}
 
 
@@ -347,5 +300,4 @@ public class PenguinSprite implements DisplayableSprite {
 
 		return coords;
 	}
-
 }
