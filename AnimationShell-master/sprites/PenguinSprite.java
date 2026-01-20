@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -39,10 +40,12 @@ public class PenguinSprite implements DisplayableSprite {
 
 	private final double WADDLE_VELOCITY = 125;
 	private final double SLIDE_VELOCITY = 400;
-	private double velocity = WADDLE_VELOCITY;
+	private final double ACCELERATION = 15;
+	private double velocityX;
+	private double velocityY;
 
 
-	private Direction direction = Direction.SOUTH;
+	private Direction directionLooking = Direction.SOUTH;
 
 
 
@@ -98,43 +101,43 @@ public class PenguinSprite implements DisplayableSprite {
 		
 
 		if (isSliding) {
-			if (direction == Direction.NORTH) {
+			if (directionLooking == Direction.NORTH) {
 				return upSlide;
-			} else if (direction == Direction.SOUTH) {
+			} else if (directionLooking == Direction.SOUTH) {
 				return downSlide;
-			} else if (direction == Direction.EAST) {
+			} else if (directionLooking == Direction.EAST) {
 				return rightSlide;
 			} else {
 				return leftSlide;
 			}
 		} else if (isMoving) {
 			if (image == 0) {
-				if (direction == Direction.NORTH) {
+				if (directionLooking == Direction.NORTH) {
 					return up0;
-				} else if (direction == Direction.SOUTH) {
+				} else if (directionLooking == Direction.SOUTH) {
 					return down0;
-				} else if (direction == Direction.EAST) {
+				} else if (directionLooking == Direction.EAST) {
 					return right0;
 				} else {
 					return left0;
 				}
 			} else {
-				if (direction == Direction.NORTH) {
+				if (directionLooking == Direction.NORTH) {
 					return up1;
-				} else if (direction == Direction.SOUTH) {
+				} else if (directionLooking == Direction.SOUTH) {
 					return down1;
-				} else if (direction == Direction.EAST) {
+				} else if (directionLooking == Direction.EAST) {
 					return right1;
 				} else {
 					return left1;
 				}
 			}
 		} else {
-			if (direction == Direction.NORTH) {
+			if (directionLooking == Direction.NORTH) {
 				return upIdle;
-			} else if (direction == Direction.SOUTH) {
+			} else if (directionLooking == Direction.SOUTH) {
 				return downIdle;
-			} else if (direction == Direction.EAST) {
+			} else if (directionLooking == Direction.EAST) {
 				return rightIdle;
 			} else {
 				return leftIdle;
@@ -188,12 +191,11 @@ public class PenguinSprite implements DisplayableSprite {
 	public void update(Universe universe, long actual_delta_time) {
 
 		elapsedTime += actual_delta_time;
-		
-		double velocityX = 0;
-		double velocityY = 0;
+		double targetVelocity;
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
+		/*
 		// SPACE
 		if (keyboard.keyDown(16)) {
 			isSliding = true;
@@ -235,7 +237,89 @@ public class PenguinSprite implements DisplayableSprite {
 		} else {
 			isMoving = false;
 		}
+		*/
 
+		// SHIFT
+		if (keyboard.keyDown(16)) {
+			isSliding = true;
+			ShellUniverse.smoothingFactor = 0.06;
+		} else {
+			isSliding = false;
+			ShellUniverse.smoothingFactor = 0.03;
+		}
+
+
+		if (!isMoving) {
+			targetVelocity = 0;
+		} else if (isSliding) {
+			targetVelocity = SLIDE_VELOCITY;
+		} else {
+			targetVelocity = WADDLE_VELOCITY;
+		}
+
+		ArrayList<Direction> directionsMoving = new ArrayList<>();
+
+		isMoving = false;
+
+		//LEFT	
+		if (keyboard.keyDown(37)) {
+			directionLooking = Direction.WEST;
+			directionsMoving.add(Direction.WEST);
+			isMoving = true;
+		}
+		// RIGHT
+		if (keyboard.keyDown(39)) {
+			directionLooking = Direction.EAST;
+			directionsMoving.add(Direction.EAST);
+			isMoving = true;
+		}
+		//UP
+		if (keyboard.keyDown(38)) {
+			directionLooking = Direction.NORTH;
+			directionsMoving.add(Direction.NORTH);
+			isMoving = true;
+		}
+		// DOWN
+		if (keyboard.keyDown(40)) {
+			directionLooking = Direction.SOUTH;
+			directionsMoving.add(Direction.SOUTH);
+			isMoving = true;
+		}
+
+		double velocityPerDirection = targetVelocity;
+
+		if (directionsMoving.size() > 1) {
+			velocityPerDirection *= 0.85;
+		}
+
+
+
+
+		double targetXVelocity = 0;
+		double targetYVelocity = 0;
+		for (int i = 0; i < directionsMoving.size(); i++) {
+			if (directionsMoving.get(i) == Direction.NORTH) {
+				targetYVelocity -= velocityPerDirection;
+			} else if (directionsMoving.get(i) == Direction.SOUTH) {
+				targetYVelocity += velocityPerDirection;
+			} else if (directionsMoving.get(i) == Direction.EAST) {
+				targetXVelocity += velocityPerDirection;
+			} else {
+				targetXVelocity -= velocityPerDirection;
+			}
+		}
+
+		if (velocityX < targetXVelocity) {
+			velocityX += ACCELERATION;
+		} else if (velocityX > targetXVelocity) {
+			velocityX -= ACCELERATION;
+		}
+
+		if (velocityY < targetYVelocity) {
+			velocityY += ACCELERATION;
+		} else if (velocityY > targetYVelocity) {
+			velocityY -= ACCELERATION;
+		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
         centerX += deltaX;
