@@ -19,22 +19,13 @@ public class RoomInstance {
 
         // Add necessary doors to match with neighbour's doors
         RoomInstance[] neighbours = this.getNeighbours(); // return formatted North, South, East, West
-        ArrayList<Direction> neighbouringWalls = new ArrayList<>();
+
         for (int i = 0; i < 4; i++) {
             if (neighbours[i] != null) {
                 if (neighbours[i].getDoors().contains(DIRECTIONS[i].opposite())) {
                     this.doors.add(DIRECTIONS[i]);
-                } else {
-                    neighbouringWalls.add(DIRECTIONS[i]);
                 }
-            }
-        }
-
-
-
-        // add random new doors
-        for (int i = 0; i < 4; i++) {
-            if ((!doors.contains(DIRECTIONS[i])) && (!neighbouringWalls.contains(DIRECTIONS[i]))) { // if not already added and not into a neighbouring wall
+            } else {
                 double rand = random.nextDouble();
                 if (rand <= DOOR_CHANCE) {
                     doors.add(DIRECTIONS[i]);

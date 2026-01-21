@@ -68,10 +68,19 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
-            northNode = null; 
+
+            northNode = null; // not possible to determine northNode
             southNode = currentNode;
-            eastNode = null;
-            westNode = null;
+            try {
+                eastNode = eastNode.getNorth();
+            } catch (Exception e) {
+                eastNode = null;
+            }
+            try {
+                westNode = westNode.getNorth();
+            } catch (Exception e) {
+                westNode = null;
+            }
         }
         currentNode = nextNode;
 
@@ -89,10 +98,19 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
+
+            southNode = null; // not possible to determine northNode
             northNode = currentNode;
-            southNode = null;
-            eastNode = null;
-            westNode = null;
+            try {
+                eastNode = eastNode.getSouth();
+            } catch (Exception e) {
+                eastNode = null;
+            }
+            try {
+                westNode = westNode.getSouth();
+            } catch (Exception e) {
+                westNode = null;
+            }
         }
         currentNode = nextNode;
 
@@ -110,10 +128,19 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
-            northNode = null;
-            southNode = null;
-            eastNode = null;
+
+            eastNode = null; // not possible to determine northNode
             westNode = currentNode;
+            try {
+                northNode = northNode.getEast();
+            } catch (Exception e) {
+                northNode = null;
+            }
+            try {
+                southNode = southNode.getEast();
+            } catch (Exception e) {
+                southNode = null;
+            }
         }
         currentNode = nextNode;
 
@@ -131,10 +158,19 @@ public class LinkedArrayIterator {
             eastNode = nextNode.getEast();
             westNode = nextNode.getWest();
         } else {
-            northNode = null;
-            southNode = null;
+
+            westNode = null; // not possible to determine northNode
             eastNode = currentNode;
-            westNode = null;
+            try {
+                northNode = northNode.getWest();
+            } catch (Exception e) {
+                northNode = null;
+            }
+            try {
+                southNode = southNode.getWest();
+            } catch (Exception e) {
+                southNode = null;
+            }
         }
         currentNode = nextNode;
 
