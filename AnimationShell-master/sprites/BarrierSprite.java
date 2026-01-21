@@ -8,35 +8,31 @@ public class BarrierSprite implements DisplayableSprite {
 
 	private static Image image;
 	private boolean visible = true;
-	private double centerX = 0;
-	private double centerY = 0;
-	private double width = 50;
-	private double height = 50;
+	private double centerX;
+	private double centerY;
+	private double width;
+	private double height;
 	private boolean dispose = false;
 	
-	public BarrierSprite() {
 	
-	}
+	public BarrierSprite(double width, double height, double centerX, double centerY, boolean visible) {
 	
-	public BarrierSprite(double minX, double minY, double maxX, double maxY, boolean visible) {
-		
 		if (image == null && visible) {
 			try {
-				image = ImageIO.read(new File("res/blue-barrier.png"));
+				image = ImageIO.read(new File("AnimationShell-master/res/blue-barrier.png"));
 			}
 			catch (IOException e) {
 				e.printStackTrace();
 			}		
 		}
 		
-		this.centerX = (minX + maxX) / 2;
-		this.centerY = (minY + maxY) / 2;
-		this.width = maxX - minX;
-		this.height = maxY - minY;
+		this.centerX = centerX;
+		this.centerY = centerY;
+		this.width = width;
+		this.height = height;
 		this.visible = visible;
-
-		ShellUniverse.roomsToAdd.add(this);
 		
+		ShellUniverse.roomsToAdd.add(this);
 	}
 	
 

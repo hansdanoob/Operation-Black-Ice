@@ -18,6 +18,10 @@ public class RoomSprite implements DisplayableSprite {
 	private double width = 400;
 	private double height = 400;
 	private boolean dispose = false;	
+	private int BARRIER_OFFSET = 210;
+	private int BARRIER_HALLWAY_OFFSET = 170;
+	private int BARRIER_THICKNESS = 40;
+	private int BARRIER_BOTTOM_OFFSET = 15;
 
     private RoomInstance roomInstance;
 
@@ -39,7 +43,9 @@ public class RoomSprite implements DisplayableSprite {
 			catch (IOException e) {
 				System.out.println(e.toString());
 			}		
-		}		
+		}
+
+		this.generateBarrierSprites();
 	}
 
 	public void createMergedImage() throws IOException{
@@ -93,6 +99,37 @@ public class RoomSprite implements DisplayableSprite {
 		// Save result
 		imageUUID = UUID.randomUUID();
 		ImageIO.write(combined, "png", new File("AnimationShell-master/res/room/generated/file" + imageUUID + ".png"));
+	}
+
+	public void generateBarrierSprites() {
+
+		if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
+		} else {
+			new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY - BARRIER_OFFSET, false);
+		}
+
+		if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+		} else {
+			new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+		}
+
+		if (this.roomInstance.getDoors().contains(Direction.EAST)) {
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
+		} else {
+			new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX + BARRIER_OFFSET, this.centerY, false);
+		}
+
+		if (this.roomInstance.getDoors().contains(Direction.WEST)) {
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
+		} else {
+			new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX - BARRIER_OFFSET, this.centerY, false);
+		}
 	}
 
 	public Image getImage() {

@@ -39,7 +39,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private boolean dispose = false;	
 
 	private final double WADDLE_VELOCITY = 125;
-	private final double SLIDE_VELOCITY = 800; // Revert to 400 after done testing
+	private final double SLIDE_VELOCITY = 400;
 	private final double ACCELERATION = 15;
 	private double velocityX;
 	private double velocityY;
@@ -69,14 +69,17 @@ public class PenguinSprite implements DisplayableSprite {
 			down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
 			downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
 			downSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-down.png"));
+
 			left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
 			left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
 			leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
 			leftSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-left.png"));
+
 			up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
 			up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
 			upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
 			upSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-up.png"));
+
 			right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
 			right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
 			rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
@@ -274,12 +277,45 @@ public class PenguinSprite implements DisplayableSprite {
 		} else if (velocityY > targetYVelocity) {
 			velocityY -= ACCELERATION;
 		}
-
+	
 		double deltaX = actual_delta_time * 0.001 * velocityX;
-        centerX += deltaX;
-		
 		double deltaY = actual_delta_time * 0.001 * velocityY;
-    	centerY += deltaY;
+		
+		//before changing position, check if the new position would result in a collision with another sprite
+		//move only if no collision results. 
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
+		
+		System.out.println(collidingBarrierX);
+		
+
+		//only move if there is no collision with pinball in any dimension and no collision with barrier in X dimension 
+		if (collidingBarrierX == false) {
+			this.centerX += deltaX;
+		}
+		//only move if there is no collision with pinball in any dimension and no collision with barrier in Y dimension 
+		if (collidingBarrierY == false) {
+			this.centerY += deltaY;
+		}
+	}
+
+	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof BarrierSprite) {
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY())) {
+					colliding = true;
+					break;					
+				}
+			}
+		}		
+		return colliding;		
 	}
 
 

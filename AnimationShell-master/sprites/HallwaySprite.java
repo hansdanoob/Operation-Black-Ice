@@ -18,7 +18,12 @@ public class HallwaySprite implements DisplayableSprite {
 	private double centerY = 0;
 	private double width = 400;
 	private double height = 400;
-	private boolean dispose = false;	
+	private boolean dispose = false;
+	private Direction directionOfDoor;
+	private int BARRIER_OFFSET_WIDTH = 90;
+	private int BARRIER_OFFSET_LENGTH = 65;
+	private int BARRIER_THICKNESS = 40;
+	private int BARRIER_BOTTOM_OFFSET = 15;
 
 
 	
@@ -26,6 +31,7 @@ public class HallwaySprite implements DisplayableSprite {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
+		this.directionOfDoor = directionOfDoor;
 		
 		if (image == null) {
 			try {
@@ -42,12 +48,33 @@ public class HallwaySprite implements DisplayableSprite {
 			catch (IOException e) {
 				System.out.println(e.toString());
 			}		
-		}		
+		}	
+		
+		this.generateBarrierSprites();
 	}
 
 	
 	public Image getImage() {
 		return image;
+	}
+
+	public void generateBarrierSprites() {
+
+		if (this.directionOfDoor == Direction.NORTH) {
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH, false);
+		} else if (this.directionOfDoor == Direction.SOUTH) {
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH, false);
+		} else if (this.directionOfDoor == Direction.EAST) {
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + (BARRIER_OFFSET_LENGTH + 30), centerY - BARRIER_OFFSET_WIDTH, false); // "Magic number" 30 is due to x axis differing from y axis, not sure why
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + (BARRIER_OFFSET_LENGTH + 30), centerY + BARRIER_OFFSET_WIDTH - BARRIER_BOTTOM_OFFSET, false);
+
+		} else { // WEST
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - (BARRIER_OFFSET_LENGTH + 30), centerY - BARRIER_OFFSET_WIDTH, false);
+			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - (BARRIER_OFFSET_LENGTH + 30), centerY + BARRIER_OFFSET_WIDTH - BARRIER_BOTTOM_OFFSET, false);
+
+		}
 	}
 	
 	//DISPLAYABLE

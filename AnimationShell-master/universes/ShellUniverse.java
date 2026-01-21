@@ -10,7 +10,7 @@ public class ShellUniverse implements Universe {
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
-	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH));
+	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)); // TEMP -------------------------------
 	public static Node startingNode;
 	public static RoomSprite startingRoom;
 	public static LinkedArrayIterator roomArrayIterator;
@@ -30,7 +30,7 @@ public class ShellUniverse implements Universe {
 
 	public static ArrayList<File> filesToDelete = new ArrayList<File>();
 
-	public static ArrayList<int[]> allRoomCoords = new ArrayList<int[]>(); // not working??? Not necessary??
+	//public static ArrayList<int[]> allRoomCoords = new ArrayList<int[]>(); // not working??? Not necessary??
 
 
 
