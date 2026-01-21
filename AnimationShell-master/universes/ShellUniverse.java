@@ -20,8 +20,8 @@ public class ShellUniverse implements Universe {
 	public static LinkedArrayIterator eastIterator;
 	public static LinkedArrayIterator westIterator;
 
-	private double centerX;
-	private double centerY;
+	public double centerX;
+	public double centerY;
 	public static double smoothingFactor = 0.03;
 
 	public static final int ROOM_DISTANCE = 750;
