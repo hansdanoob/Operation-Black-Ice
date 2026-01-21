@@ -30,6 +30,8 @@ public class ShellUniverse implements Universe {
 
 	public static ArrayList<File> filesToDelete = new ArrayList<File>();
 
+	public static ArrayList<int[]> allRoomCoords = new ArrayList<int[]>(); // not working??? Not necessary??
+
 
 
 	public ShellUniverse () {
