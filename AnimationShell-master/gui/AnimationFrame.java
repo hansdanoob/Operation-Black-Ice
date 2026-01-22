@@ -57,7 +57,7 @@ public class AnimationFrame extends JFrame {
 	protected boolean displayTiming = false;
 
 	//scale at which to render the universe. When 1, each logical unit represents 1 pixel in both x and y dimension
-	protected double scale = 1;
+	protected static double scale = 1;
 	//used to keep record of the scale if the frame is resized
 	protected double previousScale = scale;
 	//point in universe on which the screen will center
@@ -794,6 +794,10 @@ public class AnimationFrame extends JFrame {
 
 	public boolean getWindowClosed() {
 		return windowClosed;
+	}
+
+	public static double getScale() {
+		return scale;
 	}
 	
 

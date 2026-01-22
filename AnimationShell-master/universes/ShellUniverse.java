@@ -6,11 +6,12 @@ public class ShellUniverse implements Universe {
 
 	private boolean complete = false;
 	private DisplayableSprite penguin = null;
+	private VignetteSprite vignette = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
-	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)); // TEMP -------------------------------
+	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)); // TEMP -------------------------------s
 	public static Node startingNode;
 	public static RoomSprite startingRoom;
 	public static LinkedArrayIterator roomArrayIterator;
@@ -20,8 +21,8 @@ public class ShellUniverse implements Universe {
 	public static LinkedArrayIterator eastIterator;
 	public static LinkedArrayIterator westIterator;
 
-	public double centerX;
-	public double centerY;
+	public static double centerX;
+	public static double centerY;
 	public static double smoothingFactor = 0.03;
 
 	public static final int ROOM_DISTANCE = 750;
@@ -60,6 +61,9 @@ public class ShellUniverse implements Universe {
 		startingRoom.addHallways();
 		sprites.add(startingRoom);
 
+		vignette = new VignetteSprite(centerX, centerY);
+		sprites.add(vignette);
+
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
 	}
@@ -69,11 +73,11 @@ public class ShellUniverse implements Universe {
 	}
 
 	public double getXCenter() {
-		return this.centerX;
+		return centerX;
 	}
 
 	public double getYCenter() {
-		return this.centerY;
+		return centerY;
 	}
 
 	public void setXCenter(double xCenter) {
@@ -112,18 +116,20 @@ public class ShellUniverse implements Universe {
 		disposeSprites();
 
 		// add all newly generated rooms
-		this.sprites.remove(this.sprites.size()-1); // temporarily remove player, then add back at end of list, to ensure it is the front sprite
+		this.sprites.remove(this.sprites.size()-1); // temporarily remove player and vignette, then add back at end of list, to ensure it is the front sprite
+		this.sprites.remove(this.sprites.size()-1);
 		for (int i = 0; i < roomsToAdd.size(); i++) {
 			this.sprites.add(roomsToAdd.get(i));
 		}
 		roomsToAdd.clear();
 		this.sprites.add(penguin);
+		this.sprites.add(vignette);
 
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
         
-        this.centerX += (playerX - this.centerX) * smoothingFactor;
-        this.centerY += (playerY - this.centerY) * smoothingFactor;
+        centerX += (playerX - centerX) * smoothingFactor;
+        centerY += (playerY - centerY) * smoothingFactor;
 
 		roomArrayIterator.refreshPenguinTracking();
 		northIterator.refreshPenguinTracking();
