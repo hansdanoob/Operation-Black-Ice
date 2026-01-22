@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class VignetteSprite implements DisplayableSprite { // needs to adapt to scale of game
+public class VignetteSprite implements DisplayableSprite {
 
 	private static Image image;
 	private boolean visible = true;

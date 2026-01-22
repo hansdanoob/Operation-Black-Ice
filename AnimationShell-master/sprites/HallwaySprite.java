@@ -1,17 +1,13 @@
 
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
 public class HallwaySprite implements DisplayableSprite {
 	
-	//a sprite that can be displayed and moves based on its own polling of the keyboard object
 	private Image image;	
 	private UUID imageUUID;
 	private double centerX = 0;

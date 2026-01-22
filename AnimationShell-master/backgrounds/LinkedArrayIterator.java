@@ -184,13 +184,6 @@ public class LinkedArrayIterator {
     public int yPosition() {
         return yPosition;
     }
-    /*
-    // Not working?? NOt necessary??
-    public int[] getCoords() {
-        int[] coords = {xPosition, yPosition};
-        return coords;
-    }
-    */
     
 
     public void set(RoomInstance room) {
@@ -201,7 +194,7 @@ public class LinkedArrayIterator {
     }
 
     public void attemptAddRoom() {
-        if (currentNode == null) { //&& !(ShellUniverse.allRoomCoords.contains(this.getCoords()))) { // NOT WORKING, allRoomCoords necessary??
+        if (currentNode == null) {
             RoomInstance room  = null;
 
             Node newNode = new Node(room, northNode, southNode, eastNode, westNode);
@@ -230,9 +223,6 @@ public class LinkedArrayIterator {
             RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
             ShellUniverse.roomsToAdd.add(roomSprite);
             roomSprite.addHallways();
-
-            //int [] coords = {xPosition, yPosition};
-            //ShellUniverse.allRoomCoords.add(coords);
         }
     }
 

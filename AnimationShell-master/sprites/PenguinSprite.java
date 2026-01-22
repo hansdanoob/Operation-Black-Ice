@@ -49,8 +49,6 @@ public class PenguinSprite implements DisplayableSprite {
 
 
 
-
-
 	public PenguinSprite(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
 		
@@ -92,12 +90,7 @@ public class PenguinSprite implements DisplayableSprite {
 	}
 
 	public Image getImage() {
-		/*
-		 * Calculation for which image to display
-		 * 1. calculate how many periods of time have elapsed since this sprite was instantiated?
-		 * 2. calculate which image (aka 'frame') of the sprite animation should be shown out of the cycle of images
-		 * 3. use some conditional logic to determine the right image for the current direction
-		 */
+		
 		long period = elapsedTime / PERIOD_LENGTH;
 		int image = (int) (period % IMAGES_IN_CYCLE);
 
@@ -149,7 +142,6 @@ public class PenguinSprite implements DisplayableSprite {
 	}
 	
 	//DISPLAYABLE
-	
 	public boolean getVisible() {
 		return true;
 	}
@@ -281,19 +273,17 @@ public class PenguinSprite implements DisplayableSprite {
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		double deltaY = actual_delta_time * 0.001 * velocityY;
 		
-		//before changing position, check if the new position would result in a collision with another sprite
-		//move only if no collision results. 
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
 		
 		System.out.println(collidingBarrierX);
 		
 
-		//only move if there is no collision with pinball in any dimension and no collision with barrier in X dimension 
+		//only move if there is no collision with barrier in X dimension 
 		if (collidingBarrierX == false) {
 			this.centerX += deltaX;
 		}
-		//only move if there is no collision with pinball in any dimension and no collision with barrier in Y dimension 
+		//only move if there is no collision with barrier in Y dimension 
 		if (collidingBarrierY == false) {
 			this.centerY += deltaY;
 		}
@@ -325,7 +315,6 @@ public class PenguinSprite implements DisplayableSprite {
 	}
 
 	public static int[] getNearestGridPoint() {
-
 		int gridX = (int) Math.round(centerX / ShellUniverse.ROOM_DISTANCE);
         int gridY = (int) Math.round(centerY / ShellUniverse.ROOM_DISTANCE);
 

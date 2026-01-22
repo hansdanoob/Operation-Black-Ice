@@ -18,7 +18,7 @@ public class RoomInstance {
         this.parentNode = parentNode;
 
         // Add necessary doors to match with neighbour's doors
-        RoomInstance[] neighbours = this.getNeighbours(); // return formatted North, South, East, West
+        RoomInstance[] neighbours = this.getNeighbours(); // returns formatted North, South, East, West
 
         for (int i = 0; i < 4; i++) {
             if (neighbours[i] != null) {

@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 public class RoomSprite implements DisplayableSprite {
 	
-	//a sprite that can be displayed and moves based on its own polling of the keyboard object
 	private Image image;	
 	private UUID imageUUID;
 	private double centerX = 0;
@@ -89,14 +88,14 @@ public class RoomSprite implements DisplayableSprite {
 		// Draw base image
 		g.drawImage(image1, 0, 0, null);
 
-		// Draw overlay image on top
+		// Draw overlay images on top
 		g.drawImage(image2, 0, 0, null);
 		g.drawImage(image3, 0, 0, null);
 		g.drawImage(image4, 0, 0, null);
 
 		g.dispose();
 
-		// Save result
+		// Save result with random UUID
 		imageUUID = UUID.randomUUID();
 		ImageIO.write(combined, "png", new File("AnimationShell-master/res/room/generated/file" + imageUUID + ".png"));
 	}
