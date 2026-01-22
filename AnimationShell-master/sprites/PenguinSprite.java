@@ -39,7 +39,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private boolean dispose = false;	
 
 	private final double WADDLE_VELOCITY = 125;
-	private final double SLIDE_VELOCITY = 400;
+	private final double SLIDE_VELOCITY = 650;
 	private final double ACCELERATION = 15;
 	private final long SLIDE_LENGTH = 10000;
 	private double velocityX;
@@ -190,33 +190,35 @@ public class PenguinSprite implements DisplayableSprite {
 		double targetVelocity;
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
-
-		long slideStartTime;
+		/*
+		// SHIFT
+		if (keyboard.keyDown(16)) {
+			isSliding = true;
+			ShellUniverse.smoothingFactor = 0.06;
+		} else {
+			isSliding = false;
+			ShellUniverse.smoothingFactor = 0.03;
+		}
+		*/
 
 		// SHIFT
 		if (keyboard.keyDownOnce(16)) {
 			isSliding = true;
 			ShellUniverse.smoothingFactor = 0.06;
-			slideStartTime = elapsedTime;
-		} else {
-			
+			if (directionLooking == Direction.NORTH) {
+				velocityY = -SLIDE_VELOCITY;
+			} else if (directionLooking == Direction.SOUTH) {
+				velocityY = SLIDE_VELOCITY;
+			} else if (directionLooking == Direction.EAST) {
+				velocityX = SLIDE_VELOCITY;
+			} else {
+				velocityX = -SLIDE_VELOCITY;
+			}
 		}
-
-
-
-
-		/*
-		else if (slideStartTime + SLIDE_LENGTH < elapsedTime) {
-			isSliding = false;
-			ShellUniverse.smoothingFactor = 0.03;
-		}
-			*/
 
 
 		if (!isMoving) {
 			targetVelocity = 0;
-		} else if (isSliding) {
-			targetVelocity = SLIDE_VELOCITY;
 		} else {
 			targetVelocity = WADDLE_VELOCITY;
 		}
@@ -289,9 +291,6 @@ public class PenguinSprite implements DisplayableSprite {
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
 		
-		System.out.println(collidingBarrierX);
-		
-
 		//only move if there is no collision with barrier in X dimension 
 		if (collidingBarrierX == false) {
 			centerX += deltaX;
@@ -299,6 +298,13 @@ public class PenguinSprite implements DisplayableSprite {
 		//only move if there is no collision with barrier in Y dimension 
 		if (collidingBarrierY == false) {
 			centerY += deltaY;
+		}
+
+		if (isSliding) {
+			if (velocityX <= WADDLE_VELOCITY && velocityY <= WADDLE_VELOCITY) {
+				isSliding = false;
+				ShellUniverse.smoothingFactor = 0.03;
+			}
 		}
 	}
 
