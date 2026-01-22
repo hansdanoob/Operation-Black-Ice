@@ -41,6 +41,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private final double WADDLE_VELOCITY = 125;
 	private final double SLIDE_VELOCITY = 400;
 	private final double ACCELERATION = 15;
+	private final long SLIDE_LENGTH = 10000;
 	private double velocityX;
 	private double velocityY;
 
@@ -190,14 +191,26 @@ public class PenguinSprite implements DisplayableSprite {
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
+		long slideStartTime;
+
 		// SHIFT
-		if (keyboard.keyDown(16)) {
+		if (keyboard.keyDownOnce(16)) {
 			isSliding = true;
 			ShellUniverse.smoothingFactor = 0.06;
+			slideStartTime = elapsedTime;
 		} else {
+			
+		}
+
+
+
+
+		/*
+		else if (slideStartTime + SLIDE_LENGTH < elapsedTime) {
 			isSliding = false;
 			ShellUniverse.smoothingFactor = 0.03;
 		}
+			*/
 
 
 		if (!isMoving) {
@@ -281,11 +294,11 @@ public class PenguinSprite implements DisplayableSprite {
 
 		//only move if there is no collision with barrier in X dimension 
 		if (collidingBarrierX == false) {
-			this.centerX += deltaX;
+			centerX += deltaX;
 		}
 		//only move if there is no collision with barrier in Y dimension 
 		if (collidingBarrierY == false) {
-			this.centerY += deltaY;
+			centerY += deltaY;
 		}
 	}
 
