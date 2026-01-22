@@ -11,7 +11,7 @@ public class ShellUniverse implements Universe {
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
-	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)); // TEMP -------------------------------s
+	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.EAST, Direction.WEST));
 	public static Node startingNode;
 	public static RoomSprite startingRoom;
 	public static LinkedArrayIterator roomArrayIterator;
@@ -160,8 +160,10 @@ public class ShellUniverse implements Universe {
 			if (sprite instanceof SealSprite) {
 				seals.add(sprite);
 				sprites.remove(sprite);
+				i--;
 			} else if (sprite == penguin || sprite == vignette) {
 				sprites.remove(sprite);
+				i--;
 			}
 		}
 

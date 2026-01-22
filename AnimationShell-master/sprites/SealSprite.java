@@ -40,7 +40,7 @@ public class SealSprite implements DisplayableSprite {
 
 	private static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
 
-	private final double WALK_VELOCITY = 150;
+	private final double WALK_VELOCITY = 125;
 	private double velocityX;
 	private double velocityY;
 

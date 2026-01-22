@@ -227,7 +227,7 @@ public class LinkedArrayIterator {
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
 
-            if (random.nextDouble() < 0.5) {
+            if (random.nextDouble() < 0.2) {
                 SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
                 ShellUniverse.spritesToAdd.add(sealSprite);
             }
