@@ -28,6 +28,8 @@ public class PenguinSprite implements DisplayableSprite {
 	private static Image downSlide;
 
 	private long elapsedTime = 0;
+	private long timeSinceLastSlide = 0;
+	private static boolean canSlide = true;
 
 	private boolean isMoving = false;
 	private boolean isSliding = false;
@@ -41,7 +43,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private final double WADDLE_VELOCITY = 125;
 	private final double SLIDE_VELOCITY = 650;
 	private final double ACCELERATION = 15;
-	private final long SLIDE_LENGTH = 10000;
+	private final long SLIDE_COOLDOWN = 1500;
 	private double velocityX;
 	private double velocityY;
 
@@ -184,25 +186,28 @@ public class PenguinSprite implements DisplayableSprite {
 		return dispose;
 	}
 
+	public static boolean canSlide() {
+		return canSlide;
+	}
+
 	public void update(Universe universe, long actual_delta_time) {
 
 		elapsedTime += actual_delta_time;
+		timeSinceLastSlide += actual_delta_time;
+
+		if (timeSinceLastSlide > SLIDE_COOLDOWN) {
+			canSlide = true;
+		} else {
+			canSlide = false;
+		}
+
 		double targetVelocity;
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
-		/*
-		// SHIFT
-		if (keyboard.keyDown(16)) {
-			isSliding = true;
-			ShellUniverse.smoothingFactor = 0.06;
-		} else {
-			isSliding = false;
-			ShellUniverse.smoothingFactor = 0.03;
-		}
-		*/
 
 		// SHIFT
-		if (keyboard.keyDownOnce(16)) {
+		if (keyboard.keyDownOnce(16) && canSlide) {
+			this.timeSinceLastSlide = 0;
 			isSliding = true;
 			ShellUniverse.smoothingFactor = 0.06;
 			if (directionLooking == Direction.NORTH) {
@@ -301,7 +306,7 @@ public class PenguinSprite implements DisplayableSprite {
 		}
 
 		if (isSliding) {
-			if (velocityX <= WADDLE_VELOCITY && velocityY <= WADDLE_VELOCITY) {
+			if (Math.abs(velocityX) <= WADDLE_VELOCITY && Math.abs(velocityY) <= WADDLE_VELOCITY) {
 				isSliding = false;
 				ShellUniverse.smoothingFactor = 0.03;
 			}

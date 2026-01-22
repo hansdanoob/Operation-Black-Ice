@@ -430,7 +430,7 @@ public class AnimationFrame extends JFrame {
 
 	protected void updateControls() {
 
-		this.lblTop.setText(String.format("Time: %9.3f;  offsetX: %5d; offsetY: %5d;  scale: %3.3f", total_elapsed_time / 1000.0, screenOffsetX, screenOffsetY, scale));
+		this.lblTop.setText(String.format("Time: %9.3f;  offsetX: %5d; offsetY: %5d;  scale: %3.3f; canSlide: %b", total_elapsed_time / 1000.0, screenOffsetX, screenOffsetY, scale, PenguinSprite.canSlide()));
 		if (universe != null) {
 			this.lblBottom.setText(universe.toString());
 		}
@@ -454,12 +454,12 @@ public class AnimationFrame extends JFrame {
 			btnPauseRun_mouseClicked(null);
 		}
 		if (keyboard.keyDown(KeyboardInput.KEY_F1)) {
-			scale *= 1.01;
+			scale *= 1.1;
 			previousScale = scale;
 			contentPane_mouseMoved(null);
 		}
 		if (keyboard.keyDown(KeyboardInput.KEY_F2)) {
-			scale /= 1.01;
+			scale /= 1.1;
 			previousScale = scale;
 			contentPane_mouseMoved(null);
 		}
