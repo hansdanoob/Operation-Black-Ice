@@ -40,10 +40,11 @@ public class PenguinSprite implements DisplayableSprite {
 	private double height = 32;
 	private boolean dispose = false;	
 
-	private final double WADDLE_VELOCITY = 125;
-	private final double SLIDE_VELOCITY = 650;
+	private final double WADDLE_VELOCITY = 50;
+	private final double SLIDE_VELOCITY = 400;
+	private final double SLIDE_DECCELERATION = 5;
 	private final double ACCELERATION = 15;
-	private final long SLIDE_COOLDOWN = 1700;
+	private final long SLIDE_COOLDOWN = 4500;
 	private double velocityX;
 	private double velocityY;
 
@@ -278,16 +279,23 @@ public class PenguinSprite implements DisplayableSprite {
 			}
 		}
 
+		double acceleration;
+		if (isSliding) {
+			acceleration = SLIDE_DECCELERATION;
+		} else {
+			acceleration = ACCELERATION;
+		}
+
 		if (velocityX < targetXVelocity) {
-			velocityX += ACCELERATION;
+			velocityX += acceleration;
 		} else if (velocityX > targetXVelocity) {
-			velocityX -= ACCELERATION;
+			velocityX -= acceleration;
 		}
 
 		if (velocityY < targetYVelocity) {
-			velocityY += ACCELERATION;
+			velocityY += acceleration;
 		} else if (velocityY > targetYVelocity) {
-			velocityY -= ACCELERATION;
+			velocityY -= acceleration;
 		}
 	
 		double deltaX = actual_delta_time * 0.001 * velocityX;

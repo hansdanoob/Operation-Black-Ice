@@ -1,4 +1,5 @@
 // import java.util.ListIterator;
+import java.util.Random;
 
 public class LinkedArrayIterator {
     
@@ -14,6 +15,8 @@ public class LinkedArrayIterator {
 
     int deltaFromPenguinX = 0;
     int deltaFromPenguinY = 0;
+
+    private Random random = new Random();
 
 
 
@@ -223,6 +226,11 @@ public class LinkedArrayIterator {
             RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
+
+            if (random.nextDouble() < 0.5) {
+                SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
+                ShellUniverse.spritesToAdd.add(sealSprite);
+            }
         }
     }
 

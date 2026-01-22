@@ -32,15 +32,15 @@ public class SealSprite implements DisplayableSprite {
 	private final double PLAYER_DETECTION_RADIUS = 500;
 	private final double DESPAWN_RADIUS = 2000;
 
-	public static double centerX = 0;
-	public static double centerY = 0;
-	private double width = 32;
-	private double height = 32;
+	public double centerX = 0;
+	public double centerY = 0;
+	private double width = 50;
+	private double height = 50;
 	private boolean dispose = false;	
 
 	private static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
 
-	private final double WALK_VELOCITY = 100;
+	private final double WALK_VELOCITY = 150;
 	private double velocityX;
 	private double velocityY;
 
@@ -64,7 +64,11 @@ public class SealSprite implements DisplayableSprite {
 		centerX = centerXin;
 		centerY = centerYin;
 
-		directionsMoving.add(Direction.NORTH);
+		if (random.nextDouble() > 0.5) {
+			directionsMoving.add(Direction.NORTH);
+		} else {
+			directionsMoving.add(Direction.SOUTH);
+		}
 
 		if (random.nextDouble() > 0.5) {
 			directionsMoving.add(Direction.WEST);
@@ -75,21 +79,21 @@ public class SealSprite implements DisplayableSprite {
 		
 		
 		try {
-			down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
-			down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
-			downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
+			up0 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-up-0.png"));
+			up1 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-up-1.png"));
+			upIdle = ImageIO.read(new File("AnimationShell-master/res/seal/idle-up.png"));
+			
+			down0 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-down-0.png"));
+			down1 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-down-1.png"));
+			downIdle = ImageIO.read(new File("AnimationShell-master/res/seal/idle-down.png"));
 
-			left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
-			left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
-			leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
+			left0 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-left-0.png"));
+			left1 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-left-1.png"));
+			leftIdle = ImageIO.read(new File("AnimationShell-master/res/seal/idle-left.png"));
 
-			up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
-			up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
-			upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
-
-			right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
-			right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
-			rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));			
+			right0 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-right-0.png"));
+			right1 = ImageIO.read(new File("AnimationShell-master/res/seal/walk-right-1.png"));
+			rightIdle = ImageIO.read(new File("AnimationShell-master/res/seal/idle-right.png"));			
 		}
 		catch (IOException e) {
 			System.err.println(e.toString());
@@ -274,11 +278,9 @@ public class SealSprite implements DisplayableSprite {
 			if (directionsMoving.contains(Direction.EAST)) {
 				directionsMoving.remove(Direction.EAST);
 				directionsMoving.add(Direction.WEST);
-				centerX -= 10;
 			} else {
 				directionsMoving.remove(Direction.WEST);
 				directionsMoving.add(Direction.EAST);
-				centerX += 10;
 			}
 		}
 		//only move if there is no collision with barrier in Y dimension 
@@ -288,12 +290,16 @@ public class SealSprite implements DisplayableSprite {
 			if (directionsMoving.contains(Direction.NORTH)) {
 				directionsMoving.remove(Direction.NORTH);
 				directionsMoving.add(Direction.SOUTH);
-				centerY += 10; // Slight nudge to get it off the wall
 			} else {
 				directionsMoving.remove(Direction.SOUTH);
 				directionsMoving.add(Direction.NORTH);
-				centerY -= 10;
 			}
+		}
+
+		if (checkCollisionWithPenguin(universe.getSprites())) {
+			PenguinSprite.centerX = 0;
+			PenguinSprite.centerY = 0;
+			this.dispose = true;
 		}
 	}
 
@@ -306,6 +312,25 @@ public class SealSprite implements DisplayableSprite {
 			if (sprite instanceof BarrierSprite) {
 				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
 						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY())) {
+					colliding = true;
+					break;					
+				}
+			}
+		}		
+		return colliding;		
+	}
+
+	private boolean checkCollisionWithPenguin(ArrayList<DisplayableSprite> sprites) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof PenguinSprite) {
+				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), 
+						this.getMaxX(), this.getMaxY(), 
 						sprite.getMinX(),sprite.getMinY(), 
 						sprite.getMaxX(), sprite.getMaxY())) {
 					colliding = true;

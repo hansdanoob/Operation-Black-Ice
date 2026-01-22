@@ -66,10 +66,6 @@ public class ShellUniverse implements Universe {
 
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
-
-		//Test
-		SealSprite sealSprite = new SealSprite(100, 100);
-        ShellUniverse.spritesToAdd.add(sealSprite);
 	}
 
 	public double getScale() {
