@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 import javax.imageio.ImageIO;
 
 public class SealSprite implements DisplayableSprite {
@@ -30,7 +29,7 @@ public class SealSprite implements DisplayableSprite {
 	private boolean isMoving = false;
 	private boolean isAgressive = false;
 
-	private final double PLAYER_DETECTION_RADIUS = 700;
+	private final double PLAYER_DETECTION_RADIUS = 500;
 	private final double DESPAWN_RADIUS = 2000;
 
 	public static double centerX = 0;
@@ -41,8 +40,7 @@ public class SealSprite implements DisplayableSprite {
 
 	private static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
 
-	private final double WALK_VELOCITY = 200;
-	private final double ACCELERATION = 15;
+	private final double WALK_VELOCITY = 100;
 	private double velocityX;
 	private double velocityY;
 
@@ -68,8 +66,12 @@ public class SealSprite implements DisplayableSprite {
 
 		directionsMoving.add(Direction.NORTH);
 
-		int randIndex = ((int) random.nextDouble() * 2) + 2; // either 2 or 3, corresponds to East or West
-		directionsMoving.add(DIRECTIONS[randIndex]);
+		if (random.nextDouble() > 0.5) {
+			directionsMoving.add(Direction.WEST);
+		} else {
+			directionsMoving.add(Direction.EAST);
+		}
+		
 		
 		
 		try {
@@ -188,11 +190,19 @@ public class SealSprite implements DisplayableSprite {
 
 		elapsedTime += actual_delta_time;
 
-		double distance = this.getDistance(this.getCenterX(), this.getCenterY(), PenguinSprite.centerX, PenguinSprite.centerY);
-		// --------------------------------------------------
+		double distanceToPlayer = this.getDistance(this.getCenterX(), this.getCenterY(), PenguinSprite.centerX, PenguinSprite.centerY);
+		if (distanceToPlayer > DESPAWN_RADIUS) {
+			this.dispose = true;
+		} else if (distanceToPlayer < PLAYER_DETECTION_RADIUS) { // Detects player
+			isAgressive = true;
+		} else { 	// Default movement
+			isAgressive = false;
+		}
 
 
 		double targetVelocity;
+
+		isMoving = true; // For current implementation of SealSprite, it will always be moving
 
 		if (!isMoving) {
 			targetVelocity = 0;
@@ -201,63 +211,54 @@ public class SealSprite implements DisplayableSprite {
 		}
 
 
-		isMoving = true; // For current implementation of SealSprite, it will always be moving
+		if (isAgressive) {
 
-		double velocityPerDirection = targetVelocity;
+			double distanceX = PenguinSprite.centerX - centerX;
+			double distanceY = PenguinSprite.centerY - centerY;
 
-		if (directionsMoving.size() > 1) {
-			velocityPerDirection *= 0.85;
-		}
+			velocityX = (distanceX / distanceToPlayer) * targetVelocity;
+			velocityY = (distanceY / distanceToPlayer) * targetVelocity;
 
 
-		double targetXVelocity = 0;
-		double targetYVelocity = 0;
-		for (int i = 0; i < directionsMoving.size(); i++) {
-			if (directionsMoving.get(i) == Direction.NORTH) {
-				targetYVelocity -= velocityPerDirection;
-			} else if (directionsMoving.get(i) == Direction.SOUTH) {
-				targetYVelocity += velocityPerDirection;
-			} else if (directionsMoving.get(i) == Direction.EAST) {
-				targetXVelocity += velocityPerDirection;
-			} else {
-				targetXVelocity -= velocityPerDirection;
+		} else {
+			double velocityPerDirection = targetVelocity;
+
+			if (directionsMoving.size() > 1) {
+				velocityPerDirection *= 0.85;
+			}
+
+			velocityX = 0;
+			velocityY = 0;
+
+			for (int i = 0; i < directionsMoving.size(); i++) {
+				if (directionsMoving.get(i) == Direction.NORTH) {
+					velocityY -= velocityPerDirection;
+				} else if (directionsMoving.get(i) == Direction.SOUTH) {
+					velocityY += velocityPerDirection;
+				} else if (directionsMoving.get(i) == Direction.EAST) {
+					velocityX += velocityPerDirection;
+				} else {
+					velocityX -= velocityPerDirection;
+				}
 			}
 		}
 
-		// Apply acceleration
-		if (velocityX < targetXVelocity) {
-			velocityX += ACCELERATION;
-		} else if (velocityX > targetXVelocity) {
-			velocityX -= ACCELERATION;
-		}
-		if (velocityY < targetYVelocity) {
-			velocityY += ACCELERATION;
-		} else if (velocityY > targetYVelocity) {
-			velocityY -= ACCELERATION;
-		}
+	
 
 		// Determine directionLooking
 		if (Math.abs(velocityX) > Math.abs(velocityY)) {
-			if (velocityX < 0) {
+			if (velocityX <= 0) {
 				directionLooking = Direction.WEST;
 			} else {
 				directionLooking = Direction.EAST;
 			}
 		} else {
-			if (velocityY < 0) {
+			if (velocityY <= 0) {
 				directionLooking = Direction.NORTH;
 			} else {
 				directionLooking = Direction.SOUTH;
 			}
 		}
-
-
-
-
-
-
-
-
 
 	
 		double deltaX = actual_delta_time * 0.001 * velocityX;
@@ -269,10 +270,30 @@ public class SealSprite implements DisplayableSprite {
 		//only move if there is no collision with barrier in X dimension 
 		if (collidingBarrierX == false) {
 			centerX += deltaX;
+		} else { // colliding in X axis
+			if (directionsMoving.contains(Direction.EAST)) {
+				directionsMoving.remove(Direction.EAST);
+				directionsMoving.add(Direction.WEST);
+				centerX -= 10;
+			} else {
+				directionsMoving.remove(Direction.WEST);
+				directionsMoving.add(Direction.EAST);
+				centerX += 10;
+			}
 		}
 		//only move if there is no collision with barrier in Y dimension 
 		if (collidingBarrierY == false) {
 			centerY += deltaY;
+		} else { // colliding in Y axis
+			if (directionsMoving.contains(Direction.NORTH)) {
+				directionsMoving.remove(Direction.NORTH);
+				directionsMoving.add(Direction.SOUTH);
+				centerY += 10; // Slight nudge to get it off the wall
+			} else {
+				directionsMoving.remove(Direction.SOUTH);
+				directionsMoving.add(Direction.NORTH);
+				centerY -= 10;
+			}
 		}
 	}
 
@@ -299,17 +320,5 @@ public class SealSprite implements DisplayableSprite {
 	@Override
 	public void setDispose(boolean dispose) {
 		this.dispose = true;
-	}
-
-	public static int[] getNearestGridPoint() {
-		int gridX = (int) Math.round(centerX / ShellUniverse.ROOM_DISTANCE);
-        int gridY = (int) Math.round(centerY / ShellUniverse.ROOM_DISTANCE);
-
-        int closestX = gridX * ShellUniverse.ROOM_DISTANCE;
-        int closestY = gridY * ShellUniverse.ROOM_DISTANCE;
-
-		int[] coords = {closestX, closestY};
-
-		return coords;
 	}
 }

@@ -27,7 +27,7 @@ public class ShellUniverse implements Universe {
 
 	public static final int ROOM_DISTANCE = 750;
 
-	public static ArrayList<DisplayableSprite> roomsToAdd = new ArrayList<DisplayableSprite>();
+	public static ArrayList<DisplayableSprite> spritesToAdd = new ArrayList<DisplayableSprite>();
 
 	public static ArrayList<File> filesToDelete = new ArrayList<File>();
 
@@ -66,6 +66,10 @@ public class ShellUniverse implements Universe {
 
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
+
+		//Test
+		SealSprite sealSprite = new SealSprite(100, 100);
+        ShellUniverse.spritesToAdd.add(sealSprite);
 	}
 
 	public double getScale() {
@@ -115,15 +119,8 @@ public class ShellUniverse implements Universe {
 		
 		disposeSprites();
 
-		// add all newly generated rooms
-		this.sprites.remove(this.sprites.size()-1); // temporarily remove player and vignette, then add back at end of list, to ensure it is the front sprite
-		this.sprites.remove(this.sprites.size()-1);
-		for (int i = 0; i < roomsToAdd.size(); i++) {
-			this.sprites.add(roomsToAdd.get(i));
-		}
-		roomsToAdd.clear();
-		this.sprites.add(penguin);
-		this.sprites.add(vignette);
+		addSprites();
+		pushPrioritySpritesToFront();
 
 		double playerX = penguin.getCenterX();
         double playerY = penguin.getCenterY();
@@ -147,6 +144,37 @@ public class ShellUniverse implements Universe {
 		southIterator.attemptAddRoom();
 		eastIterator.attemptAddRoom();
 		westIterator.attemptAddRoom();
+	}
+
+	public void addSprites() {
+
+		for (int i = 0; i < spritesToAdd.size(); i++) {
+			this.sprites.add(spritesToAdd.get(i));
+		}
+
+		spritesToAdd.clear();
+
+	}
+
+	public void pushPrioritySpritesToFront() {
+		ArrayList<DisplayableSprite> seals = new ArrayList<>();
+
+		for (int i = 0; i < sprites.size(); i++) {
+			DisplayableSprite sprite = sprites.get(i);
+			if (sprite instanceof SealSprite) {
+				seals.add(sprite);
+				sprites.remove(sprite);
+			} else if (sprite == penguin || sprite == vignette) {
+				sprites.remove(sprite);
+			}
+		}
+
+		for (int i = 0; i < seals.size(); i++) {
+			sprites.add(seals.get(i));
+		}
+
+		sprites.add(penguin);
+		sprites.add(vignette);
 	}
 
 	public static void deleteImageFiles() {

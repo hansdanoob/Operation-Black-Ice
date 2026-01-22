@@ -221,7 +221,7 @@ public class LinkedArrayIterator {
             currentNode = newNode;
 
             RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
-            ShellUniverse.roomsToAdd.add(roomSprite);
+            ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
         }
     }

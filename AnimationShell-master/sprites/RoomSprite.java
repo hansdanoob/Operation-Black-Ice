@@ -194,19 +194,19 @@ public class RoomSprite implements DisplayableSprite {
 
 		if (doors.contains(Direction.NORTH)) {
 			HallwaySprite hallwayNorth = new HallwaySprite(this.centerX, this.centerY - hallwayOffest, Direction.SOUTH);
-			ShellUniverse.roomsToAdd.add(hallwayNorth); 
+			ShellUniverse.spritesToAdd.add(hallwayNorth); 
 		}
 		if (doors.contains(Direction.SOUTH)) {
 			HallwaySprite hallwaySouth = new HallwaySprite(this.centerX, this.centerY + hallwayOffest, Direction.NORTH);
-			ShellUniverse.roomsToAdd.add(hallwaySouth);
+			ShellUniverse.spritesToAdd.add(hallwaySouth);
 		}
 		if (doors.contains(Direction.EAST)) {
 			HallwaySprite hallwayEast = new HallwaySprite(this.centerX + hallwayOffest, this.centerY, Direction.WEST);
-			ShellUniverse.roomsToAdd.add(hallwayEast);
+			ShellUniverse.spritesToAdd.add(hallwayEast);
 		}
 		if (doors.contains(Direction.WEST)) {
 			HallwaySprite hallwayWest = new HallwaySprite(this.centerX - hallwayOffest, this.centerY, Direction.EAST);
-			ShellUniverse.roomsToAdd.add(hallwayWest);
+			ShellUniverse.spritesToAdd.add(hallwayWest);
 		}
 	}
 

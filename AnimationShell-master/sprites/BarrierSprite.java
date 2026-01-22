@@ -32,7 +32,7 @@ public class BarrierSprite implements DisplayableSprite {
 		this.height = height;
 		this.visible = visible;
 		
-		ShellUniverse.roomsToAdd.add(this);
+		ShellUniverse.spritesToAdd.add(this);
 	}
 	
 
