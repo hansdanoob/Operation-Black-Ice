@@ -299,7 +299,7 @@ public class SealSprite implements DisplayableSprite {
 					directionsMoving.add(Direction.EAST);
 				}
 			} else {
-			collsionCompensationToY = velocityY / (velocityX / 2); // half of x velocity (currently going into a wall) is transferred
+			collsionCompensationToY = velocityY / (velocityX / 2); // part of x velocity (currently going into a wall) is transferred
 			}
 			
 		}
@@ -317,7 +317,7 @@ public class SealSprite implements DisplayableSprite {
 					directionsMoving.add(Direction.NORTH);
 				}
 			} else {
-				collsionCompensationToX = velocityX / (velocityY / 2); // part of x velocity (currently going into a wall) is transferred
+				collsionCompensationToX = velocityX / (velocityY / 2);
 			}
 		}
 
