@@ -19,6 +19,7 @@ public class RedTintSprite implements DisplayableSprite {
 	private double scale = 1;
     public static double closestSealToPlayerDistance;
     private final double DANGER_RADIUS = 400; // screen will start to tine as of 600 distance
+	private final double MAX_TINT = 0.4;
     private double transparency = 0;
 
 	public RedTintSprite(double centerX, double centerY) {
@@ -116,7 +117,7 @@ public class RedTintSprite implements DisplayableSprite {
         // Clamp value (VERY important)
         transparency = Math.max(0, Math.min(1, transparency));
 
-        transparency *= 0.3; // set 0.2 to be max
+        transparency *= MAX_TINT;
 
         tintedImage = applyTransparency(baseImage, (float) transparency);
 
