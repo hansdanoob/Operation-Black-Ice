@@ -25,9 +25,12 @@ public class SealSprite implements DisplayableSprite {
 	private static Image downIdle;
 
 	private long elapsedTime = 0;
+	private long timeSinceLastStun = Integer.MAX_VALUE;
+	private final long STUN_LENGTH = 1000;
 
 	private boolean isMoving = false;
 	private boolean isAgressive = false;
+	private boolean isStunned = false;
 
 	private final double PLAYER_DETECTION_RADIUS = 500;
 	private final double DESPAWN_RADIUS = 2000;
@@ -40,7 +43,7 @@ public class SealSprite implements DisplayableSprite {
 
 	private static final Direction[] DIRECTIONS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
 
-	private final double WALK_VELOCITY = 125;
+	private final double WALK_VELOCITY = 160;
 	private double velocityX;
 	private double velocityY;
 
@@ -188,6 +191,7 @@ public class SealSprite implements DisplayableSprite {
 	public void update(Universe universe, long actual_delta_time) {
 
 		elapsedTime += actual_delta_time;
+		timeSinceLastStun += actual_delta_time;
 
 		double distanceToPlayer = ShellUniverse.getDistance(this.getCenterX(), this.getCenterY(), PenguinSprite.centerX, PenguinSprite.centerY);
 		if (distanceToPlayer > DESPAWN_RADIUS) {
@@ -203,14 +207,24 @@ public class SealSprite implements DisplayableSprite {
 
 		isMoving = true; // For current implementation of SealSprite, it will always be moving
 
+		if (timeSinceLastStun <= STUN_LENGTH) {
+			isStunned = true;
+		} else {
+			isStunned = false;
+		}
+
+
+
 		if (!isMoving) {
 			targetVelocity = 0;
 		} else {
 			targetVelocity = WALK_VELOCITY;
 		}
 
-
-		if (isAgressive) {
+		if (isStunned) {
+			velocityX = 0;
+			velocityY = 0;
+		} else if (isAgressive) {
 
 			double distanceX = PenguinSprite.centerX - centerX;
 			double distanceY = PenguinSprite.centerY - centerY;
@@ -292,9 +306,19 @@ public class SealSprite implements DisplayableSprite {
 		}
 
 		if (checkCollisionWithPenguin(universe.getSprites())) {
-			PenguinSprite.centerX = 0;
-			PenguinSprite.centerY = 0;
-			this.dispose = true;
+			if (!PenguinSprite.isSliding() && (PenguinSprite.getTimeSinceLastDamage() > PenguinSprite.IFRAMES)) { // Can hit
+
+				PenguinSprite.resetTimeSinceLastDamge();
+				PenguinSprite.decrementHealth();
+				this.timeSinceLastStun = 0;
+
+				if (PenguinSprite.getHealth() <= 0) {
+					PenguinSprite.centerX = 0;
+					PenguinSprite.centerY = 0;
+					this.dispose = true;
+					PenguinSprite.setHealth(PenguinSprite.MAX_HEALTH);
+				}
+			}
 		}
 	}
 

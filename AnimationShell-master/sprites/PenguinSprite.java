@@ -31,8 +31,12 @@ public class PenguinSprite implements DisplayableSprite {
 	private long timeSinceLastSlide = 0;
 	private static boolean canSlide = true;
 
-	private boolean isMoving = false;
-	private boolean isSliding = false;
+	private static boolean isMoving = false;
+	private static boolean isSliding = false;
+	public static final int MAX_HEALTH = 3;
+	private static int health;
+	public static final long IFRAMES = 1000; // Invulerablility frames
+	private static long timeSinceLastDamage = Integer.MAX_VALUE;
 
 	public static double centerX = 0;
 	public static double centerY = 0;
@@ -40,8 +44,8 @@ public class PenguinSprite implements DisplayableSprite {
 	private double height = 32;
 	private boolean dispose = false;	
 
-	private final double WADDLE_VELOCITY = 100;
-	private final double SLIDE_VELOCITY = 400;
+	private final double WADDLE_VELOCITY = 125;
+	private final double SLIDE_VELOCITY = 500;
 	private final double SLIDE_DECCELERATION = 5;
 	private final double ACCELERATION = 15;
 	private final long SLIDE_COOLDOWN = 4000;
@@ -65,6 +69,7 @@ public class PenguinSprite implements DisplayableSprite {
 
 		centerX = centerXin;
 		centerY = centerYin;
+		health = MAX_HEALTH;
 		
 		try {
 			down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));
@@ -144,6 +149,30 @@ public class PenguinSprite implements DisplayableSprite {
 			}
 		}
 	}
+
+	public static boolean isSliding() {
+		return isSliding;
+	}
+
+	public static int getHealth() {
+		return health;
+	}
+
+	public static void setHealth(int newHealth) {
+		health = newHealth;
+	}
+
+	public static void decrementHealth() {
+		health--;
+	}
+
+	public static long getTimeSinceLastDamage() {
+		return timeSinceLastDamage;
+	}
+
+	public static void resetTimeSinceLastDamge() {
+		timeSinceLastDamage = 0;
+	}
 	
 	//DISPLAYABLE
 	public boolean getVisible() {
@@ -195,6 +224,7 @@ public class PenguinSprite implements DisplayableSprite {
 
 		elapsedTime += actual_delta_time;
 		timeSinceLastSlide += actual_delta_time;
+		timeSinceLastDamage += actual_delta_time;
 
 		if (timeSinceLastSlide > SLIDE_COOLDOWN) {
 			canSlide = true;

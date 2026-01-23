@@ -430,7 +430,7 @@ public class AnimationFrame extends JFrame {
 
 	protected void updateControls() {
 
-		this.lblTop.setText(String.format("Time: %9.3f;  offsetX: %5d; offsetY: %5d;  scale: %3.3f; canSlide: %b", total_elapsed_time / 1000.0, screenOffsetX, screenOffsetY, scale, PenguinSprite.canSlide()));
+		this.lblTop.setText(String.format("Time: %9.3f;  offsetX: %5d; offsetY: %5d;  scale: %3.3f; canSlide: %b; health: %2d", total_elapsed_time / 1000.0, screenOffsetX, screenOffsetY, scale, PenguinSprite.canSlide(), PenguinSprite.getHealth()));
 		if (universe != null) {
 			this.lblBottom.setText(universe.toString());
 		}
