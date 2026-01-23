@@ -11,7 +11,7 @@ public class ShellUniverse implements Universe {
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
-	private ArrayList<DisplayableSprite> seals = new ArrayList<DisplayableSprite>();
+	private static ArrayList<DisplayableSprite> seals = new ArrayList<DisplayableSprite>();
 
 	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.EAST, Direction.WEST));
 	public static Node startingNode;
@@ -154,6 +154,16 @@ public class ShellUniverse implements Universe {
 
 		double closestSealDistance = this.findDistanceClosestSealToPlayer();
 		RedTintSprite.closestSealToPlayerDistance = closestSealDistance;
+	}
+
+	public static void disposeSpawnSeals() {
+		for (int i = 0; i < seals.size(); i++) {
+			DisplayableSprite seal = seals.get(i);
+			double distance = getDistance(PenguinSprite.centerX, PenguinSprite.centerY, seal.getCenterX(), seal.getCenterY());
+			if (distance < 600) { // 600 is approximate area containing spawn room
+				seal.setDispose(true);
+			}
+		}
 	}
 
 	private double findDistanceClosestSealToPlayer() {

@@ -18,7 +18,7 @@ public class RedTintSprite implements DisplayableSprite {
 	private boolean dispose = false;
 	private double scale = 1;
     public static double closestSealToPlayerDistance;
-    private final double DANGER_RADIUS = 400; // screen will start to tine as of 600 distance
+    private final double DANGER_RADIUS = 400; // screen will start to tint as of this distance
 	private final double MAX_TINT = 0.4;
     private double transparency = 0;
 
