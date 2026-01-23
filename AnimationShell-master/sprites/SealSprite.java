@@ -49,6 +49,9 @@ public class SealSprite implements DisplayableSprite {
 	private double velocityX;
 	private double velocityY;
 
+	private double collsionCompensationToX = 0;
+	private double collsionCompensationToY = 0;
+
 	private Random random = new Random();
 
 	private Direction directionLooking = Direction.SOUTH;
@@ -255,6 +258,9 @@ public class SealSprite implements DisplayableSprite {
 			}
 		}
 
+		velocityX += collsionCompensationToX; // to avoid getting stuck on walls
+		velocityY += collsionCompensationToY;
+
 	
 
 		// Determine directionLooking
@@ -282,25 +288,36 @@ public class SealSprite implements DisplayableSprite {
 		//only move if there is no collision with barrier in X dimension 
 		if (collidingBarrierX == false) {
 			centerX += deltaX;
+			collsionCompensationToY = 0;
 		} else { // colliding in X axis
-			if (directionsMoving.contains(Direction.EAST)) {
-				directionsMoving.remove(Direction.EAST);
-				directionsMoving.add(Direction.WEST);
+			if (!isAgressive) {
+				if (directionsMoving.contains(Direction.EAST)) {
+					directionsMoving.remove(Direction.EAST);
+					directionsMoving.add(Direction.WEST);
+				} else {
+					directionsMoving.remove(Direction.WEST);
+					directionsMoving.add(Direction.EAST);
+				}
 			} else {
-				directionsMoving.remove(Direction.WEST);
-				directionsMoving.add(Direction.EAST);
+			collsionCompensationToY = velocityY / (velocityX / 2); // half of x velocity (currently going into a wall) is transferred
 			}
+			
 		}
 		//only move if there is no collision with barrier in Y dimension 
 		if (collidingBarrierY == false) {
 			centerY += deltaY;
+			collsionCompensationToX = 0;
 		} else { // colliding in Y axis
-			if (directionsMoving.contains(Direction.NORTH)) {
-				directionsMoving.remove(Direction.NORTH);
-				directionsMoving.add(Direction.SOUTH);
+			if (!isAgressive) {
+				if (directionsMoving.contains(Direction.NORTH)) {
+					directionsMoving.remove(Direction.NORTH);
+					directionsMoving.add(Direction.SOUTH);
+				} else {
+					directionsMoving.remove(Direction.SOUTH);
+					directionsMoving.add(Direction.NORTH);
+				}
 			} else {
-				directionsMoving.remove(Direction.SOUTH);
-				directionsMoving.add(Direction.NORTH);
+				collsionCompensationToX = velocityX / (velocityY / 2); // part of x velocity (currently going into a wall) is transferred
 			}
 		}
 
