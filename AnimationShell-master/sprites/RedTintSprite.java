@@ -120,8 +120,6 @@ public class RedTintSprite implements DisplayableSprite {
 
         tintedImage = applyTransparency(baseImage, (float) transparency);
 
-        System.out.println("Alpha: " + transparency);
-
 	}
 	
 }
