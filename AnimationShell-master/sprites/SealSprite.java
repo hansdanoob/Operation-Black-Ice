@@ -26,7 +26,7 @@ public class SealSprite implements DisplayableSprite {
 
 	private long elapsedTime = 0;
 	private long timeSinceLastStun = Integer.MAX_VALUE;
-	private final long STUN_LENGTH = 1500;
+	private final long STUN_LENGTH = 1200;
 
 	private boolean isMoving = false;
 	private boolean isAgressive = false;
@@ -310,7 +310,7 @@ public class SealSprite implements DisplayableSprite {
 				timeSinceLastStun = 0;
 				isStunned = true;
 			}
-			
+
 			if (!isStunned && (PenguinSprite.getTimeSinceLastDamage() > PenguinSprite.IFRAMES)) { // Can hit
 
 				PenguinSprite.resetTimeSinceLastDamge();

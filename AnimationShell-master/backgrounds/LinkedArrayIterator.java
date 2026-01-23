@@ -17,7 +17,7 @@ public class LinkedArrayIterator {
     int deltaFromPenguinY = 0;
 
     private Random random = new Random();
-    static final double SEAL_CHANCE = 0.4;
+    static final double SEAL_CHANCE = 0.1;
 
 
 
@@ -89,6 +89,8 @@ public class LinkedArrayIterator {
         currentNode = nextNode;
 
         yPosition -= ShellUniverse.ROOM_DISTANCE;
+
+        attemptSealGeneration();
     }
 
     public void moveSouth() {
@@ -119,6 +121,8 @@ public class LinkedArrayIterator {
         currentNode = nextNode;
 
         yPosition += ShellUniverse.ROOM_DISTANCE;
+
+        attemptSealGeneration();
     }
 
     public void moveEast() {
@@ -149,6 +153,8 @@ public class LinkedArrayIterator {
         currentNode = nextNode;
 
         xPosition += ShellUniverse.ROOM_DISTANCE;
+
+        attemptSealGeneration();
     }
 
     public void moveWest() {
@@ -179,6 +185,8 @@ public class LinkedArrayIterator {
         currentNode = nextNode;
 
         xPosition -= ShellUniverse.ROOM_DISTANCE;
+
+        attemptSealGeneration();
     }
     
     public int xPosition() {
@@ -227,12 +235,14 @@ public class LinkedArrayIterator {
             RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
+        }
+    }
 
-            if (random.nextDouble() < SEAL_CHANCE) {
+    public void attemptSealGeneration() {
+        if (random.nextDouble() < SEAL_CHANCE) {
                 SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
                 ShellUniverse.spritesToAdd.add(sealSprite);
             }
-        }
     }
 
     public void refreshPenguinTracking() {
