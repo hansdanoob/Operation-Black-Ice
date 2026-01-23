@@ -17,6 +17,7 @@ public class LinkedArrayIterator {
     int deltaFromPenguinY = 0;
 
     private Random random = new Random();
+    static final double SEAL_CHANCE = 0.4;
 
 
 
@@ -227,7 +228,7 @@ public class LinkedArrayIterator {
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
 
-            if (random.nextDouble() < 0.2) {
+            if (random.nextDouble() < SEAL_CHANCE) {
                 SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
                 ShellUniverse.spritesToAdd.add(sealSprite);
             }

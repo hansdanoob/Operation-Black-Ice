@@ -23,15 +23,13 @@ public class VignetteSprite implements DisplayableSprite {
 		this.centerY = centerY;
 		this.width = DEFAULT_WIDTH;
 		this.height = DEFAULT_HEIGHT;
-		
-		if (image == null) {
-			try {
-				image = ImageIO.read(new File("AnimationShell-master/res/vignette.png"));
-			}
-			catch (IOException e) {
-				System.out.println(e.toString());
-			}		
-		}		
+
+		try {
+			image = ImageIO.read(new File("AnimationShell-master/res/vignette.png"));
+		}
+		catch (IOException e) {
+			System.err.println(e.toString());
+		}	
 	}
 
 	public Image getImage() {

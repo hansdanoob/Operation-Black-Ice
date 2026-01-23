@@ -184,17 +184,12 @@ public class SealSprite implements DisplayableSprite {
 		return dispose;
 	}
 
-	private double getDistance(double x1, double y1, double x2, double y2) {
-		double distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
-		return distance;
-	}
-
 
 	public void update(Universe universe, long actual_delta_time) {
 
 		elapsedTime += actual_delta_time;
 
-		double distanceToPlayer = this.getDistance(this.getCenterX(), this.getCenterY(), PenguinSprite.centerX, PenguinSprite.centerY);
+		double distanceToPlayer = ShellUniverse.getDistance(this.getCenterX(), this.getCenterY(), PenguinSprite.centerX, PenguinSprite.centerY);
 		if (distanceToPlayer > DESPAWN_RADIUS) {
 			this.dispose = true;
 		} else if (distanceToPlayer < PLAYER_DETECTION_RADIUS) { // Detects player

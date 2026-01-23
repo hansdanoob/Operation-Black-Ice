@@ -6,10 +6,12 @@ public class ShellUniverse implements Universe {
 
 	private boolean complete = false;
 	private DisplayableSprite penguin = null;
-	private VignetteSprite vignette = null;
+	private DisplayableSprite vignette = null;
+	private DisplayableSprite redTint = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
+	private ArrayList<DisplayableSprite> seals = new ArrayList<DisplayableSprite>();
 
 	public static final ArrayList<Direction> START_ROOM_DOORS = new ArrayList<>(Arrays.asList(Direction.EAST, Direction.WEST));
 	public static Node startingNode;
@@ -64,6 +66,9 @@ public class ShellUniverse implements Universe {
 		vignette = new VignetteSprite(centerX, centerY);
 		sprites.add(vignette);
 
+		redTint = new RedTintSprite(centerX, centerY);
+		sprites.add(redTint);
+
 		penguin = new PenguinSprite(0,0);
 		sprites.add(penguin);
 	}
@@ -106,6 +111,11 @@ public class ShellUniverse implements Universe {
 		return false;
 	}		
 
+	public static double getDistance(double x1, double y1, double x2, double y2) {
+		double distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+		return distance;
+	}
+
 	public void update(Animation animation, long actual_delta_time) {
 
 		for (int i = 0; i < sprites.size(); i++) {
@@ -140,6 +150,24 @@ public class ShellUniverse implements Universe {
 		southIterator.attemptAddRoom();
 		eastIterator.attemptAddRoom();
 		westIterator.attemptAddRoom();
+
+
+		double closestSealDistance = this.findDistanceClosestSealToPlayer();
+		RedTintSprite.closestSealToPlayerDistance = closestSealDistance;
+	}
+
+	private double findDistanceClosestSealToPlayer() {
+		double smallestDistance = Double.MAX_VALUE;
+
+		for (int i = 0; i < seals.size(); i++) {
+			DisplayableSprite seal = seals.get(i);
+			double distance = getDistance(PenguinSprite.centerX, PenguinSprite.centerY, seal.getCenterX(), seal.getCenterY());
+			if (distance < smallestDistance) {
+				smallestDistance = distance;
+			}
+		}
+
+		return smallestDistance;
 	}
 
 	public void addSprites() {
@@ -153,7 +181,8 @@ public class ShellUniverse implements Universe {
 	}
 
 	public void pushPrioritySpritesToFront() {
-		ArrayList<DisplayableSprite> seals = new ArrayList<>();
+		
+		seals.clear();
 
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
@@ -161,7 +190,7 @@ public class ShellUniverse implements Universe {
 				seals.add(sprite);
 				sprites.remove(sprite);
 				i--;
-			} else if (sprite == penguin || sprite == vignette) {
+			} else if (sprite == penguin || sprite == vignette || sprite == redTint) {
 				sprites.remove(sprite);
 				i--;
 			}
@@ -173,6 +202,7 @@ public class ShellUniverse implements Universe {
 
 		sprites.add(penguin);
 		sprites.add(vignette);
+		sprites.add(redTint);
 	}
 
 	public static void deleteImageFiles() {
