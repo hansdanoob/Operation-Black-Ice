@@ -94,21 +94,20 @@ public class FishSprite implements DisplayableSprite {
 
 	public void update(Universe universe, long actual_delta_time) {
 		
-		if (checkCollisionWithPenguin(universe.getSprites(), actual_delta_time, actual_delta_time)) {
+		if (checkCollisionWithPenguin(universe.getSprites())) {
 			PenguinSprite.incrementFishCollected();
 			this.dispose = true;
 		}
 	}
 
-	private boolean checkCollisionWithPenguin(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+	private boolean checkCollisionWithPenguin(ArrayList<DisplayableSprite> sprites) {
 
-		//deltaX and deltaY represent the potential change in position
 		boolean colliding = false;
 
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof PenguinSprite) {
-				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
-						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), 
+						this.getMaxX(), this.getMaxY(), 
 						sprite.getMinX(),sprite.getMinY(), 
 						sprite.getMaxX(), sprite.getMaxY())) {
 					colliding = true;
