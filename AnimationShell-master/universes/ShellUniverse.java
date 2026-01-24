@@ -159,7 +159,7 @@ public class ShellUniverse implements Universe {
 	public static void disposeSpawnSeals() {
 		for (int i = 0; i < seals.size(); i++) {
 			DisplayableSprite seal = seals.get(i);
-			double distance = getDistance(PenguinSprite.centerX, PenguinSprite.centerY, seal.getCenterX(), seal.getCenterY());
+			double distance = getDistance(0, 0, seal.getCenterX(), seal.getCenterY());
 			if (distance < 600) { // 600 is approximate area containing spawn room
 				seal.setDispose(true);
 			}
@@ -226,13 +226,16 @@ public class ShellUniverse implements Universe {
 
 	public static void deleteImageFiles() {
 		for (int i = 0; i < filesToDelete.size(); i++) {
-			boolean deleted = filesToDelete.get(i).delete();
+			boolean deleted = filesToDelete.get(0).delete();
+			filesToDelete.remove(0);
 			System.out.println("File deleted");
 			if (!deleted) {
     			System.out.println("Failed to delete file");
 			}
 		}
-		filesToDelete.clear();
+		if (filesToDelete.size() != 0) {
+			deleteImageFiles();
+		}
 	}
 	
     protected void disposeSprites() {

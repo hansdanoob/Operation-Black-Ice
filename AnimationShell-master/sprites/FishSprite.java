@@ -1,20 +1,27 @@
+import java.awt.Image;
+import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.util.Random;
 
 
 public class FishSprite implements DisplayableSprite {
 
-    private Image image;
+    private ArrayList<Image> images = new ArrayList<Image>();
+	private Image image;
 	private boolean visible = true;
 	private double centerX;
 	private double centerY;
 	private double width = 25;
 	private double height = 25;
 	private boolean dispose = false;
+	private Random random = new Random();
+
+
 
 	public FishSprite(double centerX, double centerY) {
 
@@ -22,10 +29,18 @@ public class FishSprite implements DisplayableSprite {
 		this.centerY = centerY;
 
         try {
-		    image = ImageIO.read(new File("AnimationShell-master/res/blue-barrier.png"));
+		    images.add(ImageIO.read(new File("AnimationShell-master/res/fish/blue-0.png")));
+			images.add(ImageIO.read(new File("AnimationShell-master/res/fish/blue-1.png")));
+			images.add(ImageIO.read(new File("AnimationShell-master/res/fish/pink-0.png")));
+			images.add(ImageIO.read(new File("AnimationShell-master/res/fish/pink-1.png")));
+			images.add(ImageIO.read(new File("AnimationShell-master/res/fish/brown-0.png")));
+			images.add(ImageIO.read(new File("AnimationShell-master/res/fish/brown-1.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+		int rand = random.nextInt(6);
+		image = images.get(rand);
 	}
 
 	public Image getImage() {

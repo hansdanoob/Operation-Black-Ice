@@ -18,7 +18,7 @@ public class LinkedArrayIterator {
 
     private Random random = new Random();
     static final double SEAL_CHANCE = 0.1;
-    static final double FISH_CHANCE = 0.2;
+    static final double FISH_CHANCE = 0.4;
 
 
 
