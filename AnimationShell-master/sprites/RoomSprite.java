@@ -126,32 +126,64 @@ public class RoomSprite implements DisplayableSprite {
 
 	public void generateBarrierSprites() {
 
-		if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
-			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
-			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
-		} else {
-			new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY - BARRIER_OFFSET, false);
-		}
+		if (!looksLikeHallway) {
+			if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
+				new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
+				new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY - BARRIER_OFFSET, false);
+			} else {
+				new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY - BARRIER_OFFSET, false);
+			}
 
-		if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
-			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
-			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
-		} else {
-			new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
-		}
+			if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
+				new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+				new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX - BARRIER_HALLWAY_OFFSET, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+			} else {
+				new BarrierSprite(this.width * 1.5, BARRIER_THICKNESS, this.centerX, this.centerY + BARRIER_OFFSET - BARRIER_BOTTOM_OFFSET, false);
+			}
 
-		if (this.roomInstance.getDoors().contains(Direction.EAST)) {
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
-		} else {
-			new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX + BARRIER_OFFSET, this.centerY, false);
-		}
+			if (this.roomInstance.getDoors().contains(Direction.EAST)) {
+				new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
+				new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
+			} else {
+				new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX + BARRIER_OFFSET, this.centerY, false);
+			}
 
-		if (this.roomInstance.getDoors().contains(Direction.WEST)) {
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
+			if (this.roomInstance.getDoors().contains(Direction.WEST)) {
+				new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY + BARRIER_HALLWAY_OFFSET, false);
+				new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET, this.centerY - BARRIER_HALLWAY_OFFSET, false);
+			} else {
+				new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX - BARRIER_OFFSET, this.centerY, false);
+			}
+
 		} else {
-			new BarrierSprite(BARRIER_THICKNESS, this.height * 1.5, this.centerX - BARRIER_OFFSET, this.centerY, false);
+
+			if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
+				new BarrierSprite(BARRIER_THICKNESS, this.width / 2, this.centerX + 90, this.centerY - 170, false);
+				new BarrierSprite(BARRIER_THICKNESS, this.width / 2, this.centerX - 90, this.centerY - 170, false);
+			} else {
+				new BarrierSprite(this.width * 0.5, BARRIER_THICKNESS, this.centerX, this.centerY - 90, false);
+			}
+
+			if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
+				new BarrierSprite(BARRIER_THICKNESS, this.width / 2, this.centerX + 90, this.centerY + 170, false);
+				new BarrierSprite(BARRIER_THICKNESS, this.width / 2, this.centerX - 90, this.centerY + 170, false);
+			} else {
+				new BarrierSprite(this.width * 0.5, BARRIER_THICKNESS, this.centerX, this.centerY + 90 - BARRIER_BOTTOM_OFFSET, false);
+			}
+
+			if (this.roomInstance.getDoors().contains(Direction.EAST)) {
+				new BarrierSprite(this.height / 2, BARRIER_THICKNESS, this.centerX + 170 + 0, this.centerY + 90 - BARRIER_BOTTOM_OFFSET, false);
+				new BarrierSprite(this.height / 2, BARRIER_THICKNESS, this.centerX + 170 + 0, this.centerY - 90, false);
+			} else {
+				new BarrierSprite(BARRIER_THICKNESS, this.height * 0.5, this.centerX + 90, this.centerY, false);
+			}
+
+			if (this.roomInstance.getDoors().contains(Direction.WEST)) {
+				new BarrierSprite(this.height / 2, BARRIER_THICKNESS, this.centerX - 170 + 0, this.centerY + 90 - BARRIER_BOTTOM_OFFSET, false);
+				new BarrierSprite(this.height / 2, BARRIER_THICKNESS, this.centerX - 170 + 0, this.centerY - 90, false);
+			} else {
+				new BarrierSprite(BARRIER_THICKNESS, this.height * 0.5, this.centerX - 90, this.centerY, false);
+			}
 		}
 	}
 

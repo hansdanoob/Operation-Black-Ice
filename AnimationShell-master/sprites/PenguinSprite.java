@@ -46,7 +46,7 @@ public class PenguinSprite implements DisplayableSprite {
 
 	private static boolean isMoving = false;
 	private static boolean isSliding = false;
-	public static final int MAX_HEALTH = 20;
+	public static final int MAX_HEALTH = 3;
 	private static int health;
 	public static final long IFRAMES = 1500; // Invulerablility frames
 	private static long timeSinceLastDamage = Integer.MAX_VALUE;

@@ -194,6 +194,7 @@ public class ShellUniverse implements Universe {
 		
 		seals.clear();
 		ArrayList<DisplayableSprite> fishes = new ArrayList<>();
+		//ArrayList<DisplayableSprite> barriers = new ArrayList<>();          // For debugging barriers
 
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
@@ -205,6 +206,10 @@ public class ShellUniverse implements Universe {
 				fishes.add(sprite);
 				sprites.remove(sprite);
 				i--;
+//			} else if (sprite instanceof BarrierSprite) {          // For debugging barriers
+//				barriers.add(sprite);
+//				sprites.remove(sprite);
+//				i--;
 			} else if (sprite == penguin || sprite == vignette || sprite == redTint) {
 				sprites.remove(sprite);
 				i--;
@@ -218,6 +223,10 @@ public class ShellUniverse implements Universe {
 		for (int i = 0; i < seals.size(); i++) {
 			sprites.add(seals.get(i));
 		}
+
+//		for (int i = 0; i < barriers.size(); i++) {          // For debugging barriers
+//			sprites.add(barriers.get(i));
+//		}
 
 		sprites.add(penguin);
 		sprites.add(vignette);

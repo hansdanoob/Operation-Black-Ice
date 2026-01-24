@@ -57,11 +57,11 @@ public class HallwaySprite implements DisplayableSprite {
 	public void generateBarrierSprites() {
 
 		if (this.directionOfDoor == Direction.NORTH) {
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH, false);
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH - 30, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY - BARRIER_OFFSET_LENGTH - 30, false);
 		} else if (this.directionOfDoor == Direction.SOUTH) {
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH, false);
-			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX - BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH + 30, false);
+			new BarrierSprite(BARRIER_THICKNESS, this.height / 2, this.centerX + BARRIER_OFFSET_WIDTH, centerY + BARRIER_OFFSET_LENGTH + 30, false);
 		} else if (this.directionOfDoor == Direction.EAST) {
 			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + (BARRIER_OFFSET_LENGTH + 30), centerY - BARRIER_OFFSET_WIDTH, false); // "Magic number" 30 is due to x axis differing from y axis, not sure why
 			new BarrierSprite(this.width / 2, BARRIER_THICKNESS, this.centerX + (BARRIER_OFFSET_LENGTH + 30), centerY + BARRIER_OFFSET_WIDTH - BARRIER_BOTTOM_OFFSET, false);
