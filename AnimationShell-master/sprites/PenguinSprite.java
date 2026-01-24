@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -26,6 +27,18 @@ public class PenguinSprite implements DisplayableSprite {
 	private static Image rightSlide;
 	private static Image upSlide;
 	private static Image downSlide;
+	private static Image leftDamage;
+	private static Image rightDamage;
+	private static Image upDamage;
+	private static Image downDamage;
+
+	private static ArrayList<Image> idleImages = new ArrayList<Image>();
+	private static ArrayList<Image> slideImages = new ArrayList<Image>();
+	private static ArrayList<Image> damageImages = new ArrayList<Image>();
+	private static ArrayList<Image> moving0Images = new ArrayList<Image>();
+	private static ArrayList<Image> moving1Images = new ArrayList<Image>();
+
+	private static final ArrayList<Direction> DIRECTIONS = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST));
 
 	private long elapsedTime = 0;
 	private long timeSinceLastSlide = 0;
@@ -77,26 +90,55 @@ public class PenguinSprite implements DisplayableSprite {
 			down1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-1.png"));
 			downIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-down.png"));
 			downSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-down.png"));
+			downDamage = ImageIO.read(new File("AnimationShell-master/res/penguin/damage-down.png"));
 
 			left0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-0.png"));
 			left1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-left-1.png"));
 			leftIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-left.png"));
 			leftSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-left.png"));
+			leftDamage = ImageIO.read(new File("AnimationShell-master/res/penguin/damage-left.png"));
 
 			up0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-0.png"));
 			up1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-up-1.png"));
 			upIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-up.png"));
 			upSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-up.png"));
+			upDamage = ImageIO.read(new File("AnimationShell-master/res/penguin/damage-up.png"));
 
 			right0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-0.png"));
 			right1 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-right-1.png"));
 			rightIdle = ImageIO.read(new File("AnimationShell-master/res/penguin/idle-right.png"));
 			rightSlide = ImageIO.read(new File("AnimationShell-master/res/penguin/slide-right.png"));
+			rightDamage = ImageIO.read(new File("AnimationShell-master/res/penguin/damage-right.png"));
 			
 		}
 		catch (IOException e) {
 			System.err.println(e.toString());
-		}		
+		}
+
+		idleImages.add(upIdle);
+		idleImages.add(downIdle);
+		idleImages.add(rightIdle);
+		idleImages.add(leftIdle);
+
+		slideImages.add(upSlide);
+		slideImages.add(downSlide);
+		slideImages.add(rightSlide);
+		slideImages.add(leftSlide);
+
+		damageImages.add(upDamage);
+		damageImages.add(downDamage);
+		damageImages.add(rightDamage);
+		damageImages.add(leftDamage);
+
+		moving0Images.add(up0);
+		moving0Images.add(down0);
+		moving0Images.add(right0);
+		moving0Images.add(left0);
+
+		moving1Images.add(up1);
+		moving1Images.add(down1);
+		moving1Images.add(right1);
+		moving1Images.add(left1);
 	}
 
 	public Image getImage() {
@@ -104,50 +146,23 @@ public class PenguinSprite implements DisplayableSprite {
 		long period = elapsedTime / PERIOD_LENGTH;
 		int image = (int) (period % IMAGES_IN_CYCLE);
 
-		
+		int index = DIRECTIONS.indexOf(directionLooking);
 
-		if (isSliding) {
-			if (directionLooking == Direction.NORTH) {
-				return upSlide;
-			} else if (directionLooking == Direction.SOUTH) {
-				return downSlide;
-			} else if (directionLooking == Direction.EAST) {
-				return rightSlide;
-			} else {
-				return leftSlide;
-			}
+		if (timeSinceLastDamage <= (IFRAMES / 4)) {
+			return damageImages.get(index);
+
+		} else if (isSliding) {
+			return slideImages.get(index);
+
 		} else if (isMoving) {
 			if (image == 0) {
-				if (directionLooking == Direction.NORTH) {
-					return up0;
-				} else if (directionLooking == Direction.SOUTH) {
-					return down0;
-				} else if (directionLooking == Direction.EAST) {
-					return right0;
-				} else {
-					return left0;
-				}
+				return moving0Images.get(index);
 			} else {
-				if (directionLooking == Direction.NORTH) {
-					return up1;
-				} else if (directionLooking == Direction.SOUTH) {
-					return down1;
-				} else if (directionLooking == Direction.EAST) {
-					return right1;
-				} else {
-					return left1;
-				}
+				return moving1Images.get(index);
 			}
+
 		} else {
-			if (directionLooking == Direction.NORTH) {
-				return upIdle;
-			} else if (directionLooking == Direction.SOUTH) {
-				return downIdle;
-			} else if (directionLooking == Direction.EAST) {
-				return rightIdle;
-			} else {
-				return leftIdle;
-			}
+			return idleImages.get(index);
 		}
 	}
 
