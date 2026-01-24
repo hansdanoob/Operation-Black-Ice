@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 
@@ -76,7 +78,30 @@ public class FishSprite implements DisplayableSprite {
 	}
 
 	public void update(Universe universe, long actual_delta_time) {
+		
+		if (checkCollisionWithPenguin(universe.getSprites(), actual_delta_time, actual_delta_time)) {
+			PenguinSprite.incrementFishCollected();
+			this.dispose = true;
+		}
+	}
 
+	private boolean checkCollisionWithPenguin(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof PenguinSprite) {
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY())) {
+					colliding = true;
+					break;					
+				}
+			}
+		}		
+		return colliding;		
 	}
 	
 }

@@ -18,6 +18,7 @@ public class LinkedArrayIterator {
 
     private Random random = new Random();
     static final double SEAL_CHANCE = 0.1;
+    static final double FISH_CHANCE = 0.2;
 
 
 
@@ -235,6 +236,8 @@ public class LinkedArrayIterator {
             RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
+
+            attemptFishGeneration();
         }
     }
 
@@ -242,6 +245,13 @@ public class LinkedArrayIterator {
         if (random.nextDouble() < SEAL_CHANCE) {
                 SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
                 ShellUniverse.spritesToAdd.add(sealSprite);
+            }
+    }
+
+    public void attemptFishGeneration() {
+        if (random.nextDouble() < FISH_CHANCE) {
+                FishSprite fishSprite = new FishSprite(this.xPosition, this.yPosition);
+                ShellUniverse.spritesToAdd.add(fishSprite);
             }
     }
 

@@ -193,6 +193,7 @@ public class ShellUniverse implements Universe {
 	public void pushPrioritySpritesToFront() {
 		
 		seals.clear();
+		ArrayList<DisplayableSprite> fishes = new ArrayList<>();
 
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
@@ -200,10 +201,18 @@ public class ShellUniverse implements Universe {
 				seals.add(sprite);
 				sprites.remove(sprite);
 				i--;
+			} else if (sprite instanceof FishSprite) {
+				fishes.add(sprite);
+				sprites.remove(sprite);
+				i--;
 			} else if (sprite == penguin || sprite == vignette || sprite == redTint) {
 				sprites.remove(sprite);
 				i--;
 			}
+		}
+
+		for (int i = 0; i < fishes.size(); i++) {
+			sprites.add(fishes.get(i));
 		}
 
 		for (int i = 0; i < seals.size(); i++) {

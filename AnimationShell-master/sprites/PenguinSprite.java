@@ -51,6 +51,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private final long SLIDE_COOLDOWN = 4250;
 	private double velocityX;
 	private double velocityY;
+	private static int fishCollected = 0;
 
 
 	private Direction directionLooking = Direction.SOUTH;
@@ -172,6 +173,18 @@ public class PenguinSprite implements DisplayableSprite {
 
 	public static void resetTimeSinceLastDamge() {
 		timeSinceLastDamage = 0;
+	}
+
+	public static int getFishCollected() {
+		return fishCollected;
+	}
+
+	public static void incrementFishCollected() {
+		fishCollected++;
+	}
+
+	public void setFishCollected(int fish) {
+		fishCollected = fish;
 	}
 	
 	//DISPLAYABLE
