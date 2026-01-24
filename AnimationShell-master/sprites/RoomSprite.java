@@ -16,7 +16,8 @@ public class RoomSprite implements DisplayableSprite {
 	private double centerY = 0;
 	private double width = 400;
 	private double height = 400;
-	private boolean dispose = false;	
+	private boolean dispose = false;
+	private boolean looksLikeHallway;
 	private int BARRIER_OFFSET = 210;
 	private int BARRIER_HALLWAY_OFFSET = 170;
 	private int BARRIER_THICKNESS = 40;
@@ -25,11 +26,12 @@ public class RoomSprite implements DisplayableSprite {
     private RoomInstance roomInstance;
 
 	
-	public RoomSprite(double centerX, double centerY, RoomInstance room) {
+	public RoomSprite(double centerX, double centerY, RoomInstance room, boolean looksLikeHallway) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
         this.roomInstance = room;
+		this.looksLikeHallway = looksLikeHallway;
 		
 		if (image == null) {
 			try {
@@ -54,26 +56,48 @@ public class RoomSprite implements DisplayableSprite {
 		BufferedImage image3;
 		BufferedImage image4;
 
-
-		if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
-			image1 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-up.png"));
+		if (!looksLikeHallway) {
+			if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
+				image1 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-up.png"));
+			} else {
+				image1 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-up.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.WEST)) {
+				image2 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-left.png"));
+			} else {
+				image2 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-left.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.EAST)) {
+				image3 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-right.png"));
+			} else {
+				image3 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-right.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
+				image4 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-down.png"));
+			} else {
+				image4 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-down.png"));
+			}
 		} else {
-			image1 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-up.png"));
-		}
-		if (this.roomInstance.getDoors().contains(Direction.WEST)) {
-			image2 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-left.png"));
-		} else {
-			image2 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-left.png"));
-		}
-		if (this.roomInstance.getDoors().contains(Direction.EAST)) {
-			image3 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-right.png"));
-		} else {
-			image3 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-right.png"));
-		}
-		if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
-			image4 = ImageIO.read(new File("AnimationShell-master/res/room/basic-door-down.png"));
-		} else {
-			image4 = ImageIO.read(new File("AnimationShell-master/res/room/basic-wall-down.png"));
+			if (this.roomInstance.getDoors().contains(Direction.NORTH)) {
+				image1 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-door-up.png"));
+			} else {
+				image1 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-wall-up.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.WEST)) {
+				image2 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-door-left.png"));
+			} else {
+				image2 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-wall-left.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.EAST)) {
+				image3 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-door-right.png"));
+			} else {
+				image3 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-wall-right.png"));
+			}
+			if (this.roomInstance.getDoors().contains(Direction.SOUTH)) {
+				image4 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-door-down.png"));
+			} else {
+				image4 = ImageIO.read(new File("AnimationShell-master/res/room/hallwaylike-wall-down.png"));
+			}
 		}
 
 		// Use base image size

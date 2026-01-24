@@ -17,8 +17,9 @@ public class LinkedArrayIterator {
     int deltaFromPenguinY = 0;
 
     private Random random = new Random();
-    static final double SEAL_CHANCE = 0.1;
-    static final double FISH_CHANCE = 0.4;
+    private static final double SEAL_CHANCE = 0.1;
+    private static final double FISH_CHANCE = 0.4;
+    private static final double ROOM_TO_LOOK_LIKE_HALLWAY_CHANCE = 0.1;
 
 
 
@@ -233,11 +234,18 @@ public class LinkedArrayIterator {
 
             currentNode = newNode;
 
-            RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom());
+            boolean looksLikeHallway = false;
+            if (random.nextDouble() < ROOM_TO_LOOK_LIKE_HALLWAY_CHANCE) {
+                looksLikeHallway = true;
+            }
+
+            RoomSprite roomSprite = new RoomSprite(this.xPosition, this.yPosition, newNode.getRoom(), looksLikeHallway);
             ShellUniverse.spritesToAdd.add(roomSprite);
             roomSprite.addHallways();
-
-            attemptFishGeneration();
+            
+            if (!looksLikeHallway) {
+                attemptFishGeneration();
+            }
         }
     }
 
