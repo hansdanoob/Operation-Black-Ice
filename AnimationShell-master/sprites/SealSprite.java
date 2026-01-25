@@ -265,16 +265,16 @@ public class SealSprite implements DisplayableSprite {
 
 		// Determine directionLooking
 		if (Math.abs(velocityX) > Math.abs(velocityY)) {
-			if (velocityX <= 0) {
-				directionLooking = Direction.WEST;
-			} else {
+			if (velocityX >= 0) {
 				directionLooking = Direction.EAST;
+			} else {
+				directionLooking = Direction.WEST;
 			}
 		} else {
-			if (velocityY <= 0) {
-				directionLooking = Direction.NORTH;
-			} else {
+			if (velocityY >= 0) {
 				directionLooking = Direction.SOUTH;
+			} else {
+				directionLooking = Direction.NORTH;
 			}
 		}
 

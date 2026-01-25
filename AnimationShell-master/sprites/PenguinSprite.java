@@ -64,7 +64,7 @@ public class PenguinSprite implements DisplayableSprite {
 	private final long SLIDE_COOLDOWN = 4250;
 	private double velocityX;
 	private double velocityY;
-	private static int fishCollected = 0;
+	private static int fishCollected;
 
 
 	private Direction directionLooking = Direction.SOUTH;
@@ -84,6 +84,7 @@ public class PenguinSprite implements DisplayableSprite {
 		centerX = centerXin;
 		centerY = centerYin;
 		health = MAX_HEALTH;
+		fishCollected = 0;
 		
 		try {
 			down0 = ImageIO.read(new File("AnimationShell-master/res/penguin/waddle-down-0.png"));

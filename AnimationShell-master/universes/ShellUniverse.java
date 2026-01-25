@@ -47,6 +47,7 @@ public class ShellUniverse implements Universe {
 
 		sprites.clear();
 		seals.clear();
+		deleteImageFiles();
 
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
