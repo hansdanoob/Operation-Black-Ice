@@ -337,12 +337,7 @@ public class SealSprite implements DisplayableSprite {
 				stunLength = STUN_AFTER_HIT_LENGTH;
 
 				if (PenguinSprite.getHealth() <= 0) { // Reset
-					PenguinSprite.centerX = 0;
-					PenguinSprite.centerY = 0;
-					this.dispose = true;
-					PenguinSprite.setHealth(PenguinSprite.MAX_HEALTH);
-					PenguinSprite.setFishCollected(0);
-					ShellUniverse.disposeSpawnSeals();
+					ShellUniverse.setup();
 				}
 			}
 		}

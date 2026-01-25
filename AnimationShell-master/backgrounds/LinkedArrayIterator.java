@@ -107,7 +107,7 @@ public class LinkedArrayIterator {
             westNode = nextNode.getWest();
         } else {
 
-            southNode = null; // not possible to determine northNode
+            southNode = null; // not possible to determine southNode
             northNode = currentNode;
             try {
                 eastNode = eastNode.getSouth();
@@ -139,7 +139,7 @@ public class LinkedArrayIterator {
             westNode = nextNode.getWest();
         } else {
 
-            eastNode = null; // not possible to determine northNode
+            eastNode = null; // not possible to determine eastNode
             westNode = currentNode;
             try {
                 northNode = northNode.getEast();
@@ -171,7 +171,7 @@ public class LinkedArrayIterator {
             westNode = nextNode.getWest();
         } else {
 
-            westNode = null; // not possible to determine northNode
+            westNode = null; // not possible to determine westNode
             eastNode = currentNode;
             try {
                 northNode = northNode.getWest();

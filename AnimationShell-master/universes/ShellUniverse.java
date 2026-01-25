@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class ShellUniverse implements Universe {
 
 	private boolean complete = false;
-	private DisplayableSprite penguin = null;
-	private DisplayableSprite vignette = null;
-	private DisplayableSprite redTint = null;
-	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
+	private static DisplayableSprite penguin = null;
+	private static DisplayableSprite vignette = null;
+	private static DisplayableSprite redTint = null;
+	private static ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 	private static ArrayList<DisplayableSprite> seals = new ArrayList<DisplayableSprite>();
@@ -33,14 +33,20 @@ public class ShellUniverse implements Universe {
 
 	public static ArrayList<File> filesToDelete = new ArrayList<File>();
 
-	//public static ArrayList<int[]> allRoomCoords = new ArrayList<int[]>(); // not working??? Not necessary??
-
 
 
 	public ShellUniverse () {
 
 		this.setXCenter(0);
 		this.setYCenter(0);
+
+		setup();
+	}
+
+	public static void setup() {
+
+		sprites.clear();
+		seals.clear();
 
 		startingNode = new Node(new RoomInstance(startingNode, START_ROOM_DOORS), null, null, null, null);
 		roomArrayIterator = new LinkedArrayIterator(startingNode);
@@ -183,7 +189,7 @@ public class ShellUniverse implements Universe {
 	public void addSprites() {
 
 		for (int i = 0; i < spritesToAdd.size(); i++) {
-			this.sprites.add(spritesToAdd.get(i));
+			sprites.add(spritesToAdd.get(i));
 		}
 
 		spritesToAdd.clear();
