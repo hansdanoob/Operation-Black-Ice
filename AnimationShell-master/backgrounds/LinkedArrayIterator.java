@@ -250,10 +250,12 @@ public class LinkedArrayIterator {
     }
 
     public void attemptSealGeneration() {
-        if (random.nextDouble() < SEAL_CHANCE) {
-                SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
-                ShellUniverse.spritesToAdd.add(sealSprite);
+        if (ShellUniverse.getDistance(this.xPosition, this.yPosition, PenguinSprite.centerX, PenguinSprite.centerY) > 400) {
+            if (random.nextDouble() < SEAL_CHANCE) {
+                    SealSprite sealSprite = new SealSprite(this.xPosition, this.yPosition);
+                    ShellUniverse.spritesToAdd.add(sealSprite);
             }
+        }
     }
 
     public void attemptFishGeneration() {
