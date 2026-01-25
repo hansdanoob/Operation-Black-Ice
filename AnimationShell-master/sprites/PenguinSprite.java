@@ -198,7 +198,7 @@ public class PenguinSprite implements DisplayableSprite {
 		fishCollected++;
 	}
 
-	public void setFishCollected(int fish) {
+	public static void setFishCollected(int fish) {
 		fishCollected = fish;
 	}
 	

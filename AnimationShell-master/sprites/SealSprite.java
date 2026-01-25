@@ -341,6 +341,7 @@ public class SealSprite implements DisplayableSprite {
 					PenguinSprite.centerY = 0;
 					this.dispose = true;
 					PenguinSprite.setHealth(PenguinSprite.MAX_HEALTH);
+					PenguinSprite.setFishCollected(0);
 					ShellUniverse.disposeSpawnSeals();
 				}
 			}
